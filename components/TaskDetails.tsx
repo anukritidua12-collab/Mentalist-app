@@ -106,34 +106,34 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task, onUpdate, onClos
 
   return (
     <div className={`h-full flex flex-col shadow-xl overflow-hidden ${isDarkMode ? 'bg-slate-800 border-l border-slate-700' : 'bg-white border-l border-slate-200'}`}>
-      <div className={`p-4 border-b flex items-center justify-between ${isDarkMode ? 'border-slate-700 bg-slate-800/50' : 'border-slate-100 bg-slate-50/50'}`}>
-        <h2 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>Task Details</h2>
-        <Button variant="ghost" size="icon" onClick={onClose} className={isDarkMode ? 'text-slate-400 hover:text-white' : ''}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      <div className={`p-4 md:p-4 border-b flex items-center justify-between ${isDarkMode ? 'border-slate-700 bg-slate-800/50' : 'border-slate-100 bg-slate-50/50'}`}>
+        <h2 className={`font-semibold text-base md:text-base ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>Task Details</h2>
+        <Button variant="ghost" size="icon" onClick={onClose} className={`p-2 md:p-1 ${isDarkMode ? 'text-slate-400 hover:text-white' : ''}`}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 md:w-5 md:h-5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </Button>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 md:p-4 custom-scrollbar space-y-4 md:space-y-4">
         {/* Title & Priority Row */}
-        <div className="space-y-3">
+        <div className="space-y-3 md:space-y-3">
           <textarea
             ref={titleRef}
             autoFocus
-            className={`w-full text-lg font-bold border-none focus:ring-0 p-0 resize-none focus:outline-none bg-transparent ${isDarkMode ? 'text-white placeholder:text-slate-500' : 'text-slate-800 placeholder:text-slate-300'}`}
+            className={`w-full text-xl md:text-lg font-bold border-none focus:ring-0 p-0 resize-none focus:outline-none bg-transparent ${isDarkMode ? 'text-white placeholder:text-slate-500' : 'text-slate-800 placeholder:text-slate-300'}`}
             value={task.title}
             onChange={(e) => onUpdate({ title: e.target.value })}
             placeholder="✏️ What needs to be done?"
             rows={1}
           />
           
-          <div className="flex items-center gap-3">
-            <span className={`text-[10px] font-bold uppercase ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>Priority</span>
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className={`text-[11px] md:text-[10px] font-bold uppercase ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>Priority</span>
             <div className={`flex gap-1 p-0.5 rounded-lg ${isDarkMode ? 'bg-slate-700' : 'bg-slate-100'}`}>
               {priorityOptions.map((opt) => (
                 <button
                   key={opt.value}
                   onClick={() => onUpdate({ priority: opt.value })}
-                  className={`px-2.5 py-1 rounded text-[9px] font-bold uppercase transition-all ${
+                  className={`px-3 md:px-2.5 py-1.5 md:py-1 rounded text-[11px] md:text-[9px] font-bold uppercase transition-all active:scale-95 ${
                     task.priority === opt.value 
                       ? opt.activeClass + ' shadow-sm' 
                       : isDarkMode ? 'text-slate-400 hover:bg-slate-600 hover:text-slate-200' : 'text-slate-500 hover:bg-white hover:text-slate-700'
@@ -149,8 +149,8 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task, onUpdate, onClos
         {/* Category Assignment - Compact */}
         {categories.length > 0 && (
           <div className="space-y-2">
-            <label className={`text-[10px] font-bold uppercase ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>Lists</label>
-            <div className="flex flex-wrap gap-1.5">
+            <label className={`text-[11px] md:text-[10px] font-bold uppercase ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>Lists</label>
+            <div className="flex flex-wrap gap-2 md:gap-1.5">
               {categories.filter(cat => cat.id !== 'shared').map(category => {
                 const isSelected = task.categoryIds?.includes(category.id);
                 return (
@@ -166,7 +166,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task, onUpdate, onClos
                         onUpdate({ categoryIds: [...currentIds, category.id] });
                       }
                     }}
-                    className={`flex items-center gap-1.5 px-2 py-1 rounded-lg border text-[11px] transition-all ${
+                    className={`flex items-center gap-1.5 px-3 md:px-2 py-1.5 md:py-1 rounded-lg border text-xs md:text-[11px] transition-all active:scale-95 ${
                       isSelected 
                         ? 'border-blue-500 bg-blue-500/20 text-blue-400' 
                         : isDarkMode ? 'border-slate-600 bg-slate-700 text-slate-300 hover:border-slate-500' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
@@ -180,7 +180,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task, onUpdate, onClos
               {onAddCategory && (
                 <button
                   onClick={onAddCategory}
-                  className={`flex items-center gap-1 px-2 py-1 rounded-lg border border-dashed transition-all text-[11px] ${isDarkMode ? 'border-slate-600 text-slate-500 hover:border-indigo-500 hover:text-indigo-400' : 'border-slate-300 text-slate-400 hover:border-indigo-400 hover:text-indigo-600'}`}
+                  className={`flex items-center gap-1 px-3 md:px-2 py-1.5 md:py-1 rounded-lg border border-dashed transition-all text-xs md:text-[11px] active:scale-95 ${isDarkMode ? 'border-slate-600 text-slate-500 hover:border-indigo-500 hover:text-indigo-400' : 'border-slate-300 text-slate-400 hover:border-indigo-400 hover:text-indigo-600'}`}
                 >
                   <Icons.Plus /> New
                 </button>
@@ -217,14 +217,14 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task, onUpdate, onClos
 
         {/* Schedule - Inline */}
         <div className="space-y-2">
-          <label className={`text-[10px] font-bold uppercase flex items-center gap-1 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+          <label className={`text-[11px] md:text-[10px] font-bold uppercase flex items-center gap-1 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
             <Icons.Calendar /> Schedule
           </label>
           <div className="grid grid-cols-2 gap-2">
             <div>
               <input 
                 type="date" 
-                className={`w-full p-1.5 rounded-lg border text-xs focus:border-blue-500 outline-none ${isDarkMode ? 'bg-slate-700 border-slate-600 text-white' : 'border-slate-200 bg-white'}`}
+                className={`w-full p-2.5 md:p-1.5 rounded-lg border text-sm md:text-xs focus:border-blue-500 outline-none ${isDarkMode ? 'bg-slate-700 border-slate-600 text-white' : 'border-slate-200 bg-white'}`}
                 value={task.dueDate || ''}
                 onChange={(e) => onUpdate({ dueDate: e.target.value })}
                 title="Due date"
@@ -233,7 +233,7 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task, onUpdate, onClos
             <div>
               <input 
                 type="time" 
-                className={`w-full p-1.5 rounded-lg border text-xs focus:border-blue-500 outline-none ${isDarkMode ? 'bg-slate-700 border-slate-600 text-white' : 'border-slate-200 bg-white'}`}
+                className={`w-full p-2.5 md:p-1.5 rounded-lg border text-sm md:text-xs focus:border-blue-500 outline-none ${isDarkMode ? 'bg-slate-700 border-slate-600 text-white' : 'border-slate-200 bg-white'}`}
                 value={task.reminderTime || ''}
                 onChange={(e) => onUpdate({ reminderTime: e.target.value })}
                 title="Reminder time"

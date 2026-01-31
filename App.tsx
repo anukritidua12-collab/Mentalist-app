@@ -864,7 +864,7 @@ const App: React.FC = () => {
   const lightBg = activeTheme.bg;
 
   return (
-    <div className={`flex h-screen ${isDarkMode ? darkBg : lightBg} ${isDarkMode ? 'text-slate-100' : 'text-slate-900'} overflow-hidden transition-all duration-500`}>
+    <div className={`flex flex-col md:flex-row h-full min-h-screen ${isDarkMode ? darkBg : lightBg} ${isDarkMode ? 'text-slate-100' : 'text-slate-900'} overflow-hidden transition-all duration-500`}>
       
       {/* Mobile Overlay */}
       {sidebarOpen && (
@@ -877,48 +877,49 @@ const App: React.FC = () => {
       {/* Sidebar */}
       <aside className={`
         fixed md:relative inset-y-0 left-0 z-40
-        w-72 ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} 
+        w-[85vw] max-w-[320px] md:w-72 
+        ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} 
         border-r flex flex-col shadow-lg md:shadow-sm
         transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
       `}>
-        <div className="p-6 flex items-center justify-between">
+        <div className="p-4 md:p-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white shadow-lg ${isDarkMode ? 'shadow-indigo-900/50' : 'shadow-indigo-200'} transition-colors`}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <div className={`w-9 h-9 md:w-10 md:h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white shadow-lg ${isDarkMode ? 'shadow-indigo-900/50' : 'shadow-indigo-200'} transition-colors`}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 2a10 10 0 0 1 10 10"/><circle cx="12" cy="12" r="3"/>
               </svg>
             </div>
-            <h1 className={`text-xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>MentaList</h1>
+            <h1 className={`text-lg md:text-xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>MentaList</h1>
           </div>
           {/* Close button for mobile */}
           <button 
             onClick={() => setSidebarOpen(false)}
-            className={`md:hidden p-2 rounded-lg ${isDarkMode ? 'hover:bg-slate-700 text-slate-400' : 'hover:bg-slate-100 text-slate-500'}`}
+            className={`md:hidden p-2 rounded-lg active:scale-95 transition-transform ${isDarkMode ? 'hover:bg-slate-700 text-slate-400' : 'hover:bg-slate-100 text-slate-500'}`}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
         </div>
 
-        <nav className="flex-1 px-4 space-y-1 overflow-y-auto no-scrollbar">
+        <nav className="flex-1 px-3 md:px-4 space-y-1 overflow-y-auto no-scrollbar">
           <div className="mb-4">
             <p className={`text-[10px] font-bold ${isDarkMode ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-widest mb-2 px-3`}>Categories</p>
             {categories.map(cat => (
               <div
                 key={cat.id}
                 onClick={() => handleCategoryTap(cat.id)}
-                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all cursor-pointer group ${
+                className={`w-full flex items-center justify-between px-3 py-3 md:py-2.5 rounded-xl md:rounded-lg transition-all cursor-pointer group active:scale-[0.98] ${
                   activeCategory === cat.id 
                     ? `bg-${activeTheme.secondary} text-${activeTheme.primary} shadow-sm font-bold` 
                     : isDarkMode ? 'text-slate-400 hover:bg-slate-700' : 'text-slate-500 hover:bg-slate-50'
                 }`}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <span className="text-lg">{cat.icon}</span>
-                  <span className="text-sm truncate">{cat.name}</span>
+                  <span className="text-xl md:text-lg">{cat.icon}</span>
+                  <span className="text-sm md:text-sm truncate">{cat.name}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className={`text-[10px] font-bold ${isDarkMode ? 'bg-slate-700 border-slate-600' : 'bg-white border-slate-100'} px-1.5 py-0.5 rounded shadow-sm border`}>
@@ -996,7 +997,7 @@ const App: React.FC = () => {
             {/* Mobile Menu Button */}
             <button 
               onClick={() => setSidebarOpen(true)}
-              className={`md:hidden p-2 -ml-1 rounded-lg ${isDarkMode ? 'hover:bg-slate-700 text-slate-400' : 'hover:bg-slate-100 text-slate-500'}`}
+              className={`md:hidden p-2 -ml-1 rounded-lg active:scale-95 transition-transform ${isDarkMode ? 'hover:bg-slate-700 text-slate-400' : 'hover:bg-slate-100 text-slate-500'}`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -1005,14 +1006,14 @@ const App: React.FC = () => {
               </svg>
             </button>
             
-            <div className="relative flex-1 max-w-md">
+            <div className="relative flex-1 md:max-w-md">
               <div className={`absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
               </div>
               <input 
                 type="text" 
-                placeholder="Search your tasks..." 
-                className={`w-full pl-10 pr-4 py-2 ${isDarkMode ? 'bg-slate-700 text-white placeholder-slate-400' : 'bg-slate-100 text-slate-800 placeholder-slate-400'} border-none rounded-xl text-sm focus:ring-2 focus:ring-indigo-500/20 outline-none`}
+                placeholder="Search tasks..." 
+                className={`w-full pl-10 pr-4 py-2.5 md:py-2 ${isDarkMode ? 'bg-slate-700 text-white placeholder-slate-400' : 'bg-slate-100 text-slate-800 placeholder-slate-400'} border-none rounded-xl text-base md:text-sm focus:ring-2 focus:ring-indigo-500/20 outline-none`}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setShowSearchDropdown(true)}
@@ -1027,7 +1028,7 @@ const App: React.FC = () => {
                       <p className="text-sm">No tasks found for "{searchQuery}"</p>
                     </div>
                   ) : (
-                    <div className="max-h-80 overflow-y-auto">
+                    <div className="max-h-[60vh] md:max-h-80 overflow-y-auto">
                       {searchResults.map((result, idx) => (
                         <button
                           key={`${result.task.id}-${idx}`}
@@ -1036,7 +1037,7 @@ const App: React.FC = () => {
                             setSearchQuery('');
                             setShowSearchDropdown(false);
                           }}
-                          className={`w-full p-3 flex items-start gap-3 ${isDarkMode ? 'hover:bg-slate-700 border-slate-700' : 'hover:bg-slate-50 border-slate-50'} transition-colors text-left border-b last:border-b-0`}
+                          className={`w-full p-3 md:p-3 flex items-start gap-3 ${isDarkMode ? 'hover:bg-slate-700 border-slate-700' : 'hover:bg-slate-50 border-slate-50'} transition-colors text-left border-b last:border-b-0 active:bg-slate-100`}
                         >
                           <div className={`w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 mt-0.5 ${
                             result.task.isCompleted ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300'
@@ -1159,11 +1160,12 @@ const App: React.FC = () => {
                 <Icons.Settings />
               </Button>
               
-              <img src="https://picsum.photos/seed/user/100/100" className="w-8 h-8 rounded-full border border-slate-200" alt="Avatar" />
+              <img src="https://picsum.photos/seed/user/100/100" className="w-7 h-7 md:w-8 md:h-8 rounded-full border border-slate-200" alt="Avatar" />
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          {/* Quick Add - Hidden on mobile, shown on desktop */}
+          <div className="hidden md:flex items-center gap-3">
             <span className={`text-[10px] font-semibold ${isDarkMode ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider shrink-0`}>Quick Add</span>
             <div className="flex gap-2 flex-wrap">
               {allSuggestions.map((suggestion, idx) => (
@@ -1179,15 +1181,15 @@ const App: React.FC = () => {
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
           <div className="max-w-3xl mx-auto relative">
 
             <div className="transition-all duration-700">
               {activeCategory === 'daily' ? (
                 /* Daily List Special Header */
-                <div className="mb-8">
-                  <div className="mb-6">
-                    <h2 className={`text-4xl font-black ${isDarkMode ? 'text-white' : 'text-slate-800'} tracking-tight`}>
+                <div className="mb-6 md:mb-8">
+                  <div className="mb-4 md:mb-6">
+                    <h2 className={`text-2xl md:text-4xl font-black ${isDarkMode ? 'text-white' : 'text-slate-800'} tracking-tight`}>
                       Today - {(() => {
                         const date = new Date();
                         const day = date.getDate();
@@ -1197,29 +1199,29 @@ const App: React.FC = () => {
                         return `${day}${suffix} ${month}, ${year}`;
                       })()}
                     </h2>
-                    <p className={`mt-2 font-medium text-sm italic ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                    <p className={`mt-1 md:mt-2 font-medium text-xs md:text-sm italic ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                       {isAllCompleted ? "All clear! You've finished everything." : DAILY_QUOTES[Math.floor(Date.now() / 86400000) % DAILY_QUOTES.length]}
                     </p>
                   </div>
                   {!isAllCompleted && (
-                    <div className="flex gap-3 flex-wrap">
-                      <Button size="lg" onClick={() => addTask()} className={`rounded-2xl shadow-xl shadow-${activeTheme.primary}/20 bg-${activeTheme.primary} hover:bg-${activeTheme.primary} opacity-90 hover:opacity-100 transition-all`}>
-                        <Icons.Plus /> <span className="ml-2">Create Task</span>
+                    <div className="flex gap-2 md:gap-3 flex-wrap">
+                      <Button size="lg" onClick={() => addTask()} className={`rounded-xl md:rounded-2xl shadow-xl shadow-${activeTheme.primary}/20 bg-${activeTheme.primary} hover:bg-${activeTheme.primary} opacity-90 hover:opacity-100 transition-all text-sm md:text-base px-4 md:px-6 py-2.5 md:py-3`}>
+                        <Icons.Plus /> <span className="ml-1.5 md:ml-2">Create Task</span>
                       </Button>
-                      <Button size="lg" variant="secondary" onClick={() => setShowScheduleModal(true)} className={`rounded-2xl shadow-lg border-2 transition-all ${isDarkMode ? 'border-slate-600 hover:border-indigo-500 hover:bg-indigo-900/30' : 'border-slate-200 hover:border-indigo-300 hover:bg-indigo-50'}`}>
-                        <Icons.Calendar /> <span className="ml-2">Plan Ahead</span>
+                      <Button size="lg" variant="secondary" onClick={() => setShowScheduleModal(true)} className={`rounded-xl md:rounded-2xl shadow-lg border-2 transition-all text-sm md:text-base px-4 md:px-6 py-2.5 md:py-3 ${isDarkMode ? 'border-slate-600 hover:border-indigo-500 hover:bg-indigo-900/30' : 'border-slate-200 hover:border-indigo-300 hover:bg-indigo-50'}`}>
+                        <Icons.Calendar /> <span className="ml-1.5 md:ml-2">Plan Ahead</span>
                       </Button>
                     </div>
                   )}
                 </div>
               ) : (
                 /* Other Categories Header */
-                <div className="flex items-center justify-between mb-8">
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4 md:gap-0">
                   <div>
-                    <h2 className={`text-4xl font-black tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
+                    <h2 className={`text-2xl md:text-4xl font-black tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
                       {categories.find(c => c.id === activeCategory)?.name || 'My Tasks'}
                     </h2>
-                    <p className={`mt-2 font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                    <p className={`mt-1 md:mt-2 text-sm md:text-base font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                       {activeCategory === 'shared' 
                         ? "Tasks that others have shared with you"
                         : isAllCompleted ? "All clear! You've finished everything." : "Capture your ideas and daily goals."}
@@ -1227,8 +1229,8 @@ const App: React.FC = () => {
                   </div>
                   {/* Hide Create Task button for Shared with Me list */}
                   {!isAllCompleted && activeCategory !== 'shared' && (
-                    <Button size="lg" onClick={() => addTask()} className={`rounded-2xl shadow-xl shadow-${activeTheme.primary}/20 bg-${activeTheme.primary} hover:bg-${activeTheme.primary} opacity-90 hover:opacity-100 transition-all`}>
-                      <Icons.Plus /> <span className="ml-2">Create Task</span>
+                    <Button size="lg" onClick={() => addTask()} className={`rounded-xl md:rounded-2xl shadow-xl shadow-${activeTheme.primary}/20 bg-${activeTheme.primary} hover:bg-${activeTheme.primary} opacity-90 hover:opacity-100 transition-all text-sm md:text-base px-4 md:px-6 py-2.5 md:py-3 w-full md:w-auto justify-center`}>
+                      <Icons.Plus /> <span className="ml-1.5 md:ml-2">Create Task</span>
                     </Button>
                   )}
                 </div>
@@ -1236,28 +1238,28 @@ const App: React.FC = () => {
 
               {/* Hidden Tasks Archive Section - WhatsApp-style swipe reveal */}
               {showHiddenTasks && tasks.filter(t => t.isPrivate && (t.categoryIds?.includes(activeCategory) || (!t.categoryIds && activeCategory === 'daily'))).length > 0 && (
-                <div className="mb-8 animate-in slide-in-from-top duration-300">
+                <div className="mb-6 md:mb-8 animate-in slide-in-from-top duration-300">
                   <div 
-                    className={`rounded-2xl border overflow-hidden ${isDarkMode ? 'bg-gradient-to-r from-amber-900/30 to-orange-900/30 border-amber-800' : 'bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200'}`}
+                    className={`rounded-xl md:rounded-2xl border overflow-hidden ${isDarkMode ? 'bg-gradient-to-r from-amber-900/30 to-orange-900/30 border-amber-800' : 'bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200'}`}
                   >
                     <div 
-                      className="flex items-center justify-between p-4 cursor-pointer"
+                      className="flex items-center justify-between p-3 md:p-4 cursor-pointer active:bg-black/5"
                       onClick={() => setShowHiddenTasks(false)}
                     >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${isDarkMode ? 'bg-amber-900/50 text-amber-400' : 'bg-amber-100 text-amber-600'}`}>
+                      <div className="flex items-center gap-2 md:gap-3">
+                        <div className={`w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center ${isDarkMode ? 'bg-amber-900/50 text-amber-400' : 'bg-amber-100 text-amber-600'}`}>
                           <Icons.EyeOff />
                         </div>
                         <div>
-                          <h3 className={`font-bold ${isDarkMode ? 'text-amber-300' : 'text-amber-800'}`}>Hidden Tasks</h3>
-                          <p className={`text-xs ${isDarkMode ? 'text-amber-400' : 'text-amber-600'}`}>
+                          <h3 className={`font-bold text-sm md:text-base ${isDarkMode ? 'text-amber-300' : 'text-amber-800'}`}>Hidden Tasks</h3>
+                          <p className={`text-[11px] md:text-xs ${isDarkMode ? 'text-amber-400' : 'text-amber-600'}`}>
                             {tasks.filter(t => t.isPrivate && (t.categoryIds?.includes(activeCategory) || (!t.categoryIds && activeCategory === 'daily'))).length} hidden task{tasks.filter(t => t.isPrivate && (t.categoryIds?.includes(activeCategory) || (!t.categoryIds && activeCategory === 'daily'))).length > 1 ? 's' : ''} • Tap to collapse
                           </p>
                         </div>
                       </div>
                       <Icons.ChevronDown />
                     </div>
-                    <div className="px-4 pb-4 space-y-2">
+                    <div className="px-3 md:px-4 pb-3 md:pb-4 space-y-2">
                       {tasks
                         .filter(t => t.isPrivate && (t.categoryIds?.includes(activeCategory) || (!t.categoryIds && activeCategory === 'daily')))
                         .map(task => (
@@ -1495,33 +1497,33 @@ const App: React.FC = () => {
 
       {/* Schedule Ahead Modal */}
       {showScheduleModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl animate-in zoom-in">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-indigo-100 rounded-2xl flex items-center justify-center text-indigo-600">
+        <div className="fixed inset-0 bg-black/50 flex items-end md:items-center justify-center z-50 animate-in fade-in">
+          <div className={`rounded-t-3xl md:rounded-3xl p-6 md:p-8 max-w-md w-full md:mx-4 shadow-2xl animate-in zoom-in ${isDarkMode ? 'bg-slate-900' : 'bg-white'}`}>
+            <div className="flex items-center gap-3 md:gap-4 mb-5 md:mb-6">
+              <div className={`w-11 h-11 md:w-12 md:h-12 rounded-2xl flex items-center justify-center ${isDarkMode ? 'bg-indigo-900/50 text-indigo-400' : 'bg-indigo-100 text-indigo-600'}`}>
                 <Icons.Calendar />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-slate-800">Plan Ahead</h3>
-                <p className="text-sm text-slate-500">Schedule a task for a future date</p>
+                <h3 className={`text-lg md:text-xl font-bold ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>Plan Ahead</h3>
+                <p className={`text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Schedule a task for a future date</p>
               </div>
             </div>
             
             <div className="space-y-4">
               <div>
-                <label className="text-xs font-bold text-slate-500 uppercase mb-2 block">Select Date</label>
+                <label className={`text-xs font-bold uppercase mb-2 block ${isDarkMode ? 'text-slate-500' : 'text-slate-500'}`}>Select Date</label>
                 <input
                   type="date"
                   value={scheduledDate}
                   onChange={(e) => setScheduledDate(e.target.value)}
                   min={new Date(Date.now() + 86400000).toISOString().split('T')[0]}
-                  className="w-full p-4 rounded-xl border-2 border-slate-200 focus:border-indigo-500 outline-none text-lg"
+                  className={`w-full p-3.5 md:p-4 rounded-xl border-2 focus:border-indigo-500 outline-none text-base md:text-lg ${isDarkMode ? 'bg-slate-800 border-slate-700 text-white' : 'border-slate-200 bg-white'}`}
                 />
               </div>
               
               {scheduledDate && (
-                <div className="p-4 bg-indigo-50 rounded-xl border border-indigo-100">
-                  <p className="text-sm text-indigo-700 font-medium">
+                <div className={`p-3.5 md:p-4 rounded-xl border ${isDarkMode ? 'bg-indigo-900/30 border-indigo-800' : 'bg-indigo-50 border-indigo-100'}`}>
+                  <p className={`text-sm font-medium ${isDarkMode ? 'text-indigo-300' : 'text-indigo-700'}`}>
                     📅 Task will be scheduled for: {(() => {
                       const date = new Date(scheduledDate + 'T00:00:00');
                       const day = date.getDate();
@@ -1535,10 +1537,10 @@ const App: React.FC = () => {
               )}
             </div>
             
-            <div className="flex gap-3 mt-6">
+            <div className="flex gap-3 mt-5 md:mt-6">
               <Button 
                 variant="secondary" 
-                className="flex-1"
+                className="flex-1 py-3 md:py-2.5 text-sm md:text-base"
                 onClick={() => {
                   setShowScheduleModal(false);
                   setScheduledDate('');
@@ -1547,7 +1549,7 @@ const App: React.FC = () => {
                 Cancel
               </Button>
               <Button 
-                className={`flex-1 bg-${activeTheme.primary} hover:bg-${activeTheme.primary} opacity-90 hover:opacity-100`}
+                className={`flex-1 py-3 md:py-2.5 text-sm md:text-base bg-${activeTheme.primary} hover:bg-${activeTheme.primary} opacity-90 hover:opacity-100`}
                 onClick={addScheduledTask}
                 disabled={!scheduledDate}
               >
@@ -1570,11 +1572,11 @@ const App: React.FC = () => {
       {/* Celebration Modal - All Tasks Completed */}
       {showCelebrationModal && (
         <div 
-          className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 animate-in fade-in"
+          className="fixed inset-0 bg-black/60 flex items-end md:items-center justify-center z-50 animate-in fade-in"
           onClick={() => setShowCelebrationModal(false)}
         >
           <div 
-            className="bg-gradient-to-br from-white via-indigo-50 to-purple-50 rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl animate-in zoom-in text-center relative overflow-hidden"
+            className="bg-gradient-to-br from-white via-indigo-50 to-purple-50 rounded-t-3xl md:rounded-3xl p-6 md:p-8 max-w-md w-full md:mx-4 shadow-2xl animate-in zoom-in text-center relative overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Decorative elements */}
@@ -1584,16 +1586,16 @@ const App: React.FC = () => {
             
             {/* Trophy animation */}
             <div className="relative">
-              <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full flex items-center justify-center shadow-lg animate-bounce">
-                <span className="text-5xl">🏆</span>
+              <div className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-4 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full flex items-center justify-center shadow-lg animate-bounce">
+                <span className="text-4xl md:text-5xl">🏆</span>
               </div>
             </div>
             
-            <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">
               Woohoo! 🎉
             </h2>
             
-            <p className="text-xl font-bold text-slate-700 mb-1">
+            <p className="text-lg md:text-xl font-bold text-slate-700 mb-1">
               All tasks completed for today!
             </p>
             
@@ -1644,12 +1646,12 @@ const App: React.FC = () => {
       {/* Settings Modal */}
       {showSettings && (
         <div 
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/50 flex items-end md:items-center justify-center z-50 backdrop-blur-sm"
           onClick={() => { setShowSettings(false); setSettingsPanel('main'); }}
           style={{ animation: 'fadeIn 0.2s ease-out' }}
         >
           <div 
-            className={`rounded-3xl max-w-md w-full mx-4 shadow-2xl overflow-hidden max-h-[85vh] flex flex-col ${isDarkMode ? 'bg-slate-900' : 'bg-white'}`}
+            className={`rounded-t-3xl md:rounded-3xl max-w-md w-full md:mx-4 shadow-2xl overflow-hidden max-h-[90vh] md:max-h-[85vh] flex flex-col ${isDarkMode ? 'bg-slate-900' : 'bg-white'}`}
             onClick={(e) => e.stopPropagation()}
             style={{ animation: 'scaleIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)' }}
           >

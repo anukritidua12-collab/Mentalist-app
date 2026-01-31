@@ -157,26 +157,26 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, onDelete, on
   // If task is hidden and not in hidden section, show minimal placeholder
   if (isObscured) {
     return (
-      <div className={`group transition-all ${level > 0 ? `ml-6 mt-1 border-l pl-4 ${isDarkMode ? 'border-slate-700' : 'border-slate-200'}` : 'mt-3'}`}>
-        <div className={`flex items-center gap-3 p-3 rounded-xl border border-dashed ${isDarkMode ? 'bg-slate-800/60 border-slate-600' : 'bg-slate-100/60 border-slate-200'}`}>
-          <div className={`w-6 h-6 rounded-full flex items-center justify-center ${isDarkMode ? 'bg-slate-700' : 'bg-slate-200'}`}>
+      <div className={`group transition-all ${level > 0 ? `ml-4 md:ml-6 mt-1 border-l pl-3 md:pl-4 ${isDarkMode ? 'border-slate-700' : 'border-slate-200'}` : 'mt-2 md:mt-3'}`}>
+        <div className={`flex items-center gap-2 md:gap-3 p-3 md:p-3 rounded-xl border border-dashed ${isDarkMode ? 'bg-slate-800/60 border-slate-600' : 'bg-slate-100/60 border-slate-200'}`}>
+          <div className={`w-7 h-7 md:w-6 md:h-6 rounded-full flex items-center justify-center ${isDarkMode ? 'bg-slate-700' : 'bg-slate-200'}`}>
             <Icons.EyeOff />
           </div>
           <div className="flex-1">
             <div className={`h-4 w-32 rounded animate-pulse ${isDarkMode ? 'bg-slate-700' : 'bg-slate-200'}`} />
             <div className={`h-3 w-20 rounded mt-1 ${isDarkMode ? 'bg-slate-800' : 'bg-slate-100'}`} />
           </div>
-          <span className={`text-[10px] italic ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>Hidden task</span>
+          <span className={`text-[10px] md:text-[10px] italic ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>Hidden task</span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`group transition-all ${level > 0 ? `ml-6 mt-1 border-l pl-4 ${isDarkMode ? 'border-slate-700' : 'border-slate-200'}` : 'mt-3'}`}>
+    <div className={`group transition-all ${level > 0 ? `ml-4 md:ml-6 mt-1 border-l pl-3 md:pl-4 ${isDarkMode ? 'border-slate-700' : 'border-slate-200'}` : 'mt-2 md:mt-3'}`}>
       <div 
         onClick={() => onSelect(task)}
-        className={`flex items-center gap-3 p-3 rounded-xl transition-all border border-transparent cursor-pointer ${
+        className={`flex items-center gap-2 md:gap-3 p-3 md:p-3 rounded-xl transition-all border border-transparent cursor-pointer active:scale-[0.98] ${
           isDarkMode 
             ? `hover:bg-slate-700 hover:shadow-lg ${task.isCompleted ? 'bg-slate-800/50' : 'bg-slate-800/40'}` 
             : `hover:bg-white hover:shadow-md ${task.isCompleted ? 'bg-slate-50/50' : 'bg-white/40'}`
@@ -184,7 +184,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, onDelete, on
       >
         <button 
           onClick={toggleComplete}
-          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors shrink-0 ${
+          className={`w-7 h-7 md:w-6 md:h-6 rounded-full border-2 flex items-center justify-center transition-colors shrink-0 ${
             task.isCompleted 
               ? 'bg-emerald-500 border-emerald-500 text-white' 
               : isDarkMode 
@@ -206,12 +206,12 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, onDelete, on
                 onKeyDown={handleTitleKeyDown}
                 onClick={(e) => e.stopPropagation()}
                 autoFocus
-                className={`text-sm font-medium border border-blue-400 rounded px-2 py-0.5 outline-none focus:ring-2 focus:ring-blue-200 flex-1 ${isDarkMode ? 'bg-slate-700 text-white' : 'bg-white'}`}
+                className={`text-base md:text-sm font-medium border border-blue-400 rounded px-2 py-1 md:py-0.5 outline-none focus:ring-2 focus:ring-blue-200 flex-1 ${isDarkMode ? 'bg-slate-700 text-white' : 'bg-white'}`}
               />
             ) : (
               <h3 
                 onClick={handleTitleClick}
-                className={`text-sm font-medium truncate cursor-text ${task.isCompleted ? 'text-slate-400 line-through' : isDarkMode ? 'text-white' : 'text-slate-800'}`}
+                className={`text-base md:text-sm font-medium truncate cursor-text ${task.isCompleted ? 'text-slate-400 line-through' : isDarkMode ? 'text-white' : 'text-slate-800'}`}
                 title="Double-click to edit"
               >
                 {task.title}
@@ -224,7 +224,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, onDelete, on
                     {link.icon}
                   </span>
                 ))}
-                <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-tighter ${priorityBadgeStyles[task.priority]}`}>
+                <span className={`text-[10px] md:text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-tighter ${priorityBadgeStyles[task.priority]}`}>
                   {task.priority}
                 </span>
                 {(task.reminderTime || task.dueDate) && (
@@ -242,7 +242,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, onDelete, on
             {task.isPrivate && <span className="text-amber-500" title="Hidden task"><Icons.EyeOff /></span>}
           </div>
           
-          <div className={`flex items-center gap-3 mt-1 text-[10px] uppercase tracking-wider font-semibold ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+          <div className={`flex items-center gap-2 md:gap-3 mt-1.5 md:mt-1 text-[11px] md:text-[10px] uppercase tracking-wider font-semibold flex-wrap ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
             {task.categoryIds && task.categoryIds.length > 1 && (
               <span className="flex items-center gap-1">
                 {task.categoryIds.slice(0, 2).map(catId => {
@@ -282,12 +282,12 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, onDelete, on
           </div>
         </div>
 
-        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="flex items-center gap-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
           <Button 
             variant="ghost" 
             size="icon" 
             onClick={(e) => { e.stopPropagation(); setIsExpanded(!isExpanded); }}
-            className="text-slate-500 hover:bg-slate-100"
+            className="text-slate-500 hover:bg-slate-100 p-2 md:p-1"
             title={task.subTasks.length > 0 ? `${isExpanded ? 'Collapse' : 'Expand'} subtasks` : 'No subtasks'}
           >
             <Icons.ListChecks />
@@ -299,35 +299,35 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, onDelete, on
               variant="ghost" 
               size="icon" 
               onClick={(e) => { e.stopPropagation(); setShowShareMenu(!showShareMenu); }}
-              className={`${isDarkMode ? 'text-slate-400 hover:text-blue-400' : 'text-slate-400 hover:text-blue-500'}`}
+              className={`p-2 md:p-1 ${isDarkMode ? 'text-slate-400 hover:text-blue-400' : 'text-slate-400 hover:text-blue-500'}`}
               title="Share task"
             >
               <ShareIcon />
             </Button>
             {showShareMenu && (
-              <div className={`absolute right-0 top-full mt-1 w-40 rounded-xl shadow-2xl border py-1.5 z-50 ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'}`}>
-                <p className={`px-3 py-1 text-[9px] font-bold uppercase ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>Share via</p>
+              <div className={`absolute right-0 top-full mt-1 w-44 md:w-40 rounded-xl shadow-2xl border py-1.5 z-50 ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'}`}>
+                <p className={`px-3 py-1 text-[10px] md:text-[9px] font-bold uppercase ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>Share via</p>
                 <button 
                   onClick={(e) => { e.stopPropagation(); handleShare('whatsapp'); }}
-                  className={`w-full px-3 py-1.5 text-left text-xs flex items-center gap-2 ${isDarkMode ? 'hover:bg-slate-700 text-slate-300' : 'hover:bg-slate-50'}`}
+                  className={`w-full px-3 py-2.5 md:py-1.5 text-left text-sm md:text-xs flex items-center gap-2 ${isDarkMode ? 'hover:bg-slate-700 text-slate-300' : 'hover:bg-slate-50'}`}
                 >
                   <span>💬</span> WhatsApp
                 </button>
                 <button 
                   onClick={(e) => { e.stopPropagation(); handleShare('sms'); }}
-                  className={`w-full px-3 py-1.5 text-left text-xs flex items-center gap-2 ${isDarkMode ? 'hover:bg-slate-700 text-slate-300' : 'hover:bg-slate-50'}`}
+                  className={`w-full px-3 py-2.5 md:py-1.5 text-left text-sm md:text-xs flex items-center gap-2 ${isDarkMode ? 'hover:bg-slate-700 text-slate-300' : 'hover:bg-slate-50'}`}
                 >
                   <span>📱</span> iMessage / SMS
                 </button>
                 <button 
                   onClick={(e) => { e.stopPropagation(); handleShare('email'); }}
-                  className={`w-full px-3 py-1.5 text-left text-xs flex items-center gap-2 ${isDarkMode ? 'hover:bg-slate-700 text-slate-300' : 'hover:bg-slate-50'}`}
+                  className={`w-full px-3 py-2.5 md:py-1.5 text-left text-sm md:text-xs flex items-center gap-2 ${isDarkMode ? 'hover:bg-slate-700 text-slate-300' : 'hover:bg-slate-50'}`}
                 >
                   <span>✉️</span> Email
                 </button>
                 <button 
                   onClick={(e) => { e.stopPropagation(); handleShare('copy'); }}
-                  className={`w-full px-3 py-1.5 text-left text-xs flex items-center gap-2 ${isDarkMode ? 'hover:bg-slate-700 text-slate-300' : 'hover:bg-slate-50'}`}
+                  className={`w-full px-3 py-2.5 md:py-1.5 text-left text-sm md:text-xs flex items-center gap-2 ${isDarkMode ? 'hover:bg-slate-700 text-slate-300' : 'hover:bg-slate-50'}`}
                 >
                   <span>🔗</span> Copy to Clipboard
                 </button>
@@ -339,12 +339,12 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, onDelete, on
             variant="ghost" 
             size="icon" 
             onClick={togglePrivacy} 
-            className={task.isPrivate ? 'text-amber-500' : 'text-slate-400'}
+            className={`p-2 md:p-1 ${task.isPrivate ? 'text-amber-500' : 'text-slate-400'}`}
             title={task.isPrivate ? 'Unhide task' : 'Hide task'}
           >
             {task.isPrivate ? <Icons.EyeOff /> : <Icons.Eye />}
           </Button>
-          <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onDelete(task.id); }} className="text-slate-400 hover:text-red-500">
+          <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onDelete(task.id); }} className="text-slate-400 hover:text-red-500 p-2 md:p-1">
             <Icons.Trash />
           </Button>
         </div>
@@ -352,10 +352,10 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, onDelete, on
         {task.sharedWith.length > 0 && (
           <div className="flex -space-x-2 ml-2 shrink-0">
             {task.sharedWith.slice(0, 3).map((user) => (
-              <img key={user.id} src={user.avatar} className="w-6 h-6 rounded-full border-2 border-white" alt={user.name} />
+              <img key={user.id} src={user.avatar} className="w-7 h-7 md:w-6 md:h-6 rounded-full border-2 border-white" alt={user.name} />
             ))}
             {task.sharedWith.length > 3 && (
-              <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-600 border-2 border-white">
+              <div className="w-7 h-7 md:w-6 md:h-6 rounded-full bg-slate-100 flex items-center justify-center text-[11px] md:text-[10px] font-bold text-slate-600 border-2 border-white">
                 +{task.sharedWith.length - 3}
               </div>
             )}
