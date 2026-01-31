@@ -100,6 +100,7 @@ const App: React.FC = () => {
   const [showIconPicker, setShowIconPicker] = useState<string | null>(null);
   const [displayMode, setDisplayMode] = useState<'light' | 'dark' | 'system'>('system');
   const [systemPrefersDark, setSystemPrefersDark] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [soundSettings, setSoundSettings] = useState({
     enabled: true,
     soundId: 'chime',
@@ -271,6 +272,7 @@ const App: React.FC = () => {
   // Category management functions
   const handleCategoryTap = (categoryId: string) => {
     setActiveCategory(categoryId);
+    setSidebarOpen(false); // Close sidebar on mobile when category is selected
   };
 
   const updateCategoryName = (categoryId: string, newName: string) => {
@@ -863,15 +865,42 @@ const App: React.FC = () => {
 
   return (
     <div className={`flex h-screen ${isDarkMode ? darkBg : lightBg} ${isDarkMode ? 'text-slate-100' : 'text-slate-900'} overflow-hidden transition-all duration-500`}>
+      
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+      
       {/* Sidebar */}
-      <aside className={`w-72 ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} border-r flex flex-col shadow-sm z-20`}>
-        <div className="p-6 flex items-center gap-3">
-          <div className={`w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white shadow-lg ${isDarkMode ? 'shadow-indigo-900/50' : 'shadow-indigo-200'} transition-colors`}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 2a10 10 0 0 1 10 10"/><circle cx="12" cy="12" r="3"/>
-            </svg>
+      <aside className={`
+        fixed md:relative inset-y-0 left-0 z-40
+        w-72 ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'} 
+        border-r flex flex-col shadow-lg md:shadow-sm
+        transform transition-transform duration-300 ease-in-out
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      `}>
+        <div className="p-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className={`w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white shadow-lg ${isDarkMode ? 'shadow-indigo-900/50' : 'shadow-indigo-200'} transition-colors`}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 2a10 10 0 0 1 10 10"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+            </div>
+            <h1 className={`text-xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>MentaList</h1>
           </div>
-          <h1 className={`text-xl font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>MentaList</h1>
+          {/* Close button for mobile */}
+          <button 
+            onClick={() => setSidebarOpen(false)}
+            className={`md:hidden p-2 rounded-lg ${isDarkMode ? 'hover:bg-slate-700 text-slate-400' : 'hover:bg-slate-100 text-slate-500'}`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
         </div>
 
         <nav className="flex-1 px-4 space-y-1 overflow-y-auto no-scrollbar">
@@ -944,11 +973,11 @@ const App: React.FC = () => {
              ) : (
                <p className={`text-xs ${isDarkMode ? 'text-slate-500' : 'text-slate-400'} px-3 italic`}>No hidden tasks</p>
              )}
-          </div>
+        </div>
         </nav>
 
-        {/* Dynamic Card */}
-        <div className={`p-4 border-t ${isDarkMode ? 'border-slate-700' : 'border-slate-100'}`}>
+        {/* Dynamic Card - Hidden on mobile for more space */}
+        <div className={`p-4 border-t ${isDarkMode ? 'border-slate-700' : 'border-slate-100'} hidden md:block`}>
           <div className={`p-4 rounded-2xl ${isDarkMode ? 'bg-slate-700/50 border-slate-600' : `bg-${activeTheme.secondary} border-${activeTheme.primary}/10`} border transition-all duration-500`}>
             <p className={`text-[10px] font-bold text-${activeTheme.primary} uppercase tracking-widest mb-2`}>
               {isAllCompleted ? 'Victory Achieved!' : 'Daily Inspiration'}
@@ -961,9 +990,21 @@ const App: React.FC = () => {
       </aside>
 
       {/* Main List Area */}
-      <main className="flex-1 flex flex-col min-w-0">
-        <header className={`p-6 flex flex-col gap-4 ${isDarkMode ? 'bg-slate-800/80 border-slate-700' : 'bg-white/80 border-slate-200'} backdrop-blur-md border-b sticky top-0 z-10 shadow-sm`}>
-          <div className="flex items-center justify-between w-full">
+      <main className="flex-1 flex flex-col min-w-0 w-full">
+        <header className={`p-4 md:p-6 flex flex-col gap-4 ${isDarkMode ? 'bg-slate-800/80 border-slate-700' : 'bg-white/80 border-slate-200'} backdrop-blur-md border-b sticky top-0 z-10 shadow-sm`}>
+          <div className="flex items-center gap-3 w-full">
+            {/* Mobile Menu Button */}
+            <button 
+              onClick={() => setSidebarOpen(true)}
+              className={`md:hidden p-2 -ml-1 rounded-lg ${isDarkMode ? 'hover:bg-slate-700 text-slate-400' : 'hover:bg-slate-100 text-slate-500'}`}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
+            
             <div className="relative flex-1 max-w-md">
               <div className={`absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -1435,7 +1476,7 @@ const App: React.FC = () => {
 
       {/* Details Side Panel */}
       {selectedTask && (
-        <aside className="w-[450px] shadow-2xl z-30 animate-in slide-in-from-right duration-300">
+        <aside className="fixed md:relative inset-0 md:inset-auto w-full md:w-[450px] shadow-2xl z-50 md:z-30 animate-in slide-in-from-right duration-300 bg-white dark:bg-slate-800">
           <TaskDetails 
             task={selectedTask}
             onUpdate={(updates) => updateTask(selectedTask.id, updates)}
@@ -2050,10 +2091,10 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {/* Floating Confetti Button */}
+      {/* Floating Confetti Button - Hidden on mobile when sidebar or task details are open */}
       <button
         onClick={triggerRandomConfetti}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-2xl transition-all hover:scale-110 active:scale-95 z-40 group"
+        className={`fixed bottom-6 right-6 w-12 h-12 md:w-14 md:h-14 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-xl md:text-2xl transition-all hover:scale-110 active:scale-95 z-40 group ${(sidebarOpen || selectedTask) ? 'hidden md:flex' : ''}`}
         title="Celebrate! 🎉"
       >
         <span className="group-hover:animate-bounce">🎊</span>
