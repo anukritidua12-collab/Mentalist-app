@@ -2,13 +2,31 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
 export class GeminiService {
-  private ai: GoogleGenAI;
+  private ai: GoogleGenAI | null = null;
+  private isAvailable: boolean = false;
 
   constructor() {
-    this.ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+    const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY || '';
+    if (apiKey && apiKey.trim() !== '') {
+      try {
+        this.ai = new GoogleGenAI({ apiKey });
+        this.isAvailable = true;
+      } catch (error) {
+        console.warn("Gemini API initialization failed:", error);
+        this.isAvailable = false;
+      }
+    } else {
+      console.log("Gemini API key not set - AI features disabled");
+      this.isAvailable = false;
+    }
   }
 
   async breakdownTask(taskTitle: string): Promise<string[]> {
+    if (!this.isAvailable || !this.ai) {
+      console.log("AI not available, skipping task breakdown");
+      return [];
+    }
+    
     try {
       const response = await this.ai.models.generateContent({
         model: 'gemini-3-flash-preview',
