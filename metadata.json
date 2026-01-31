@@ -1,0 +1,8 @@
+{
+  "name": "MentaList - Intelligent Collaborative Planner",
+  "description": "A high-end, collaborative list-making application with nested sub-tasks, rich media attachments, scheduled reminders, and AI-powered task breakdowns.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

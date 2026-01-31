@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MentaList Preview</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f1f5f9; }
+        .container { display: flex; height: 100vh; overflow: hidden; }
+        
+        /* Sidebar */
+        .sidebar { width: 288px; background: white; border-right: 1px solid #e2e8f0; padding: 24px; flex-shrink: 0; overflow-y: auto; }
+        .logo { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+        .logo-icon { width: 40px; height: 40px; background: #4f46e5; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .logo-text { font-size: 20px; font-weight: bold; color: #1e293b; }
+        
+        .section { margin-bottom: 24px; }
+        .section-title { font-size: 10px; font-weight: bold; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+        .nav-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 8px; font-size: 14px; transition: all 0.3s; }
+        .nav-item:hover { background: #f1f5f9; }
+        .nav-item.active { background: #e0e7ff; color: #4f46e5; font-weight: bold; }
+        .nav-icon { font-size: 18px; margin-right: 12px; }
+        .badge { font-size: 11px; font-weight: bold; background: white; padding: 4px 8px; border-radius: 4px; border: 1px solid #e2e8f0; }
+        
+        .theme-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+        .theme-btn { width: 32px; height: 32px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: all 0.3s; }
+        .theme-clarity { background: #4f46e5; }
+        .theme-midnight { background: #0f172a; }
+        .theme-emerald { background: #059669; }
+        .theme-crimson { background: #e11d48; }
+        .theme-amber { background: #b45309; }
+        .theme-btn.active { border-color: #1e293b; }
+        
+        .privacy-btn { width: 100%; display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; background: transparent; border: none; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.3s; }
+        .privacy-btn:hover { background: #fef3c7; color: #b45309; }
+        
+        .inspiration-card { padding: 16px; background: #e0e7ff; border: 1px solid #4f46e5; border-radius: 12px; margin-top: 24px; }
+        .inspiration-card p:first-child { font-size: 10px; font-weight: bold; color: #4f46e5; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .inspiration-card p:last-child { font-size: 12px; color: #1e293b; font-style: italic; line-height: 1.5; }
+        
+        /* Main Content */
+        .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        
+        .header { padding: 24px; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
+        .search-bar { display: flex; align-items: center; gap: 12px; max-width: 400px; background: #f1f5f9; padding: 8px 12px; border-radius: 10px; margin-bottom: 16px; }
+        .search-bar input { flex: 1; border: none; background: transparent; outline: none; font-size: 14px; }
+        .search-bar input::placeholder { color: #94a3b8; }
+        .search-icon { color: #94a3b8; }
+        
+        .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .header-actions { display: flex; align-items: center; gap: 8px; }
+        .icon-btn { width: 36px; height: 36px; border: none; background: #f1f5f9; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .icon-btn:hover { background: #e2e8f0; }
+        .divider { width: 1px; height: 24px; background: #e2e8f0; }
+        .avatar { width: 32px; height: 32px; border-radius: 50%; background: #4f46e5; border: 1px solid #e2e8f0; }
+        
+        .suggestions { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; }
+        .suggestion-tag { white-space: nowrap; padding: 6px 12px; background: #f1f5f9; border-radius: 20px; font-size: 12px; font-weight: 500; color: #475569; cursor: pointer; transition: all 0.3s; }
+        .suggestion-tag:hover { background: #e0e7ff; color: #4f46e5; }
+        
+        /* Content Area */
+        .content { flex: 1; overflow-y: auto; padding: 32px; }
+        .task-header { margin-bottom: 32px; display: flex; align-items: flex-end; justify-content: space-between; }
+        .task-title { font-size: 32px; font-weight: 900; color: #1e293b; }
+        .task-subtitle { color: #64748b; margin-top: 8px; font-weight: 500; }
+        .btn-create { padding: 12px 20px; background: #4f46e5; color: white; border: none; border-radius: 16px; cursor: pointer; font-weight: 600; box-shadow: 0 8px 16px rgba(79, 70, 229, 0.2); transition: all 0.3s; }
+        .btn-create:hover { opacity: 0.9; }
+        
+        .task-list { max-width: 768px; margin: 0 auto; }
+        .task-item { background: white; border-radius: 12px; padding: 12px; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; transition: all 0.3s; cursor: pointer; border-left: 4px solid #fbbf24; }
+        .task-item:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+        .task-item.high { border-left-color: #ef4444; }
+        .task-item.medium { border-left-color: #f59e0b; }
+        .task-item.low { border-left-color: #60a5fa; }
+        .task-checkbox { width: 24px; height: 24px; border: 2px solid #cbd5e1; border-radius: 50%; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .task-checkbox.checked { background: #10b981; border-color: #10b981; color: white; }
+        .task-content { flex: 1; }
+        .task-name { font-weight: 500; color: #1e293b; font-size: 14px; }
+        .task-name.completed { text-decoration: line-through; color: #94a3b8; }
+        .task-meta { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
+        .task-priority { font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 3px; }
+        .priority-high { background: #fee2e2; color: #dc2626; }
+        .priority-medium { background: #fef3c7; color: #d97706; }
+        .priority-low { background: #dbeafe; color: #2563eb; }
+        
+        .empty-state { text-align: center; padding: 80px 20px; }
+        .empty-icon { font-size: 48px; margin-bottom: 16px; }
+        .empty-text { color: #64748b; font-weight: 500; }
+        
+        /* Victory Overlay */
+        .victory-overlay { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.2); z-index: 50; }
+        .victory-card { background: white; padding: 32px; border-radius: 24px; text-align: center; box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15); border: 1px solid #fef08a; }
+        .victory-icon { font-size: 48px; margin-bottom: 16px; animation: bounce 1s infinite; }
+        .victory-title { font-size: 24px; font-weight: 900; color: #1e293b; margin-bottom: 8px; }
+        .victory-text { color: #475569; margin-bottom: 24px; font-weight: 500; }
+        .victory-actions { display: flex; gap: 12px; justify-content: center; }
+        .btn-victory { padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; }
+        .btn-share { background: #f1f5f9; color: #1e293b; }
+        .btn-reset { background: #fee2e2; color: #dc2626; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">🧠</div>
+                <div class="logo-text">MentaList</div>
+            </div>
+            
+            <div class="section">
+                <p class="section-title">Categories</p>
+                <div class="nav-item active">
+                    <div><span class="nav-icon">☀️</span>Daily Focus</div>
+                    <span class="badge">3</span>
+                </div>
+                <div class="nav-item">
+                    <div><span class="nav-icon">💼</span>Work Project</div>
+                    <span class="badge">5</span>
+                </div>
+                <div class="nav-item">
+                    <div><span class="nav-icon">🏠</span>Personal</div>
+                    <span class="badge">2</span>
+                </div>
+                <div class="nav-item">
+                    <div><span class="nav-icon">👥</span>Shared with Me</div>
+                    <span class="badge">1</span>
+                </div>
+            </div>
+            
+            <div class="section">
+                <p class="section-title">Themes</p>
+                <div class="theme-grid">
+                    <div class="theme-btn theme-clarity active" title="Clarity"></div>
+                    <div class="theme-btn theme-midnight" title="Midnight"></div>
+                    <div class="theme-btn theme-emerald" title="Emerald"></div>
+                    <div class="theme-btn theme-crimson" title="Crimson"></div>
+                    <div class="theme-btn theme-amber" title="Amber"></div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <p class="section-title">Privacy</p>
+                <button class="privacy-btn">👁️ Hide Private</button>
+            </div>
+            
+            <div class="inspiration-card">
+                <p>Daily Inspiration</p>
+                <p>"Your only limit is your mind. Dream it. Wish it. Do it."</p>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-top">
+                    <div class="search-bar">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Search everything...">
+                    </div>
+                    <div class="header-actions">
+                        <button class="icon-btn" title="Share via WhatsApp">💬</button>
+                        <button class="icon-btn" title="Share via Message">📤</button>
+                        <div class="divider"></div>
+                        <div class="avatar"></div>
+                    </div>
+                </div>
+                
+                <div class="suggestions">
+                    <p style="font-size: 10px; font-weight: bold; color: #94a3b8; text-transform: uppercase; margin-right: 12px; white-space: nowrap;">Add Fast:</p>
+                    <div class="suggestion-tag">🛒 Buy groceries</div>
+                    <div class="suggestion-tag">🏃‍♂️ Morning run</div>
+                    <div class="suggestion-tag">🧘‍♀️ Meditation</div>
+                    <div class="suggestion-tag">💧 Drink water</div>
+                    <div class="suggestion-tag">📧 Check emails</div>
+                    <div class="suggestion-tag">📚 Read for 20m</div>
+                    <div class="suggestion-tag">🔄 Recurring task</div>
+                </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="content" id="content">
+                <div class="task-header">
+                    <div>
+                        <h2 class="task-title">Daily Focus</h2>
+                        <p class="task-subtitle">Capture your ideas, shared tasks, and daily goals.</p>
+                    </div>
+                    <button class="btn-create">➕ Create Task</button>
+                </div>
+                
+                <div class="task-list" id="taskList">
+                    <div class="task-item medium">
+                        <div class="task-checkbox"></div>
+                        <div class="task-content">
+                            <div class="task-name">Design new landing page</div>
+                            <div class="task-meta">
+                                <span class="task-priority priority-medium">MEDIUM</span>
+                                <span>📎 2 attachments</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="task-item high">
+                        <div class="task-checkbox"></div>
+                        <div class="task-content">
+                            <div class="task-name">Fix critical bug in API</div>
+                            <div class="task-meta">
+                                <span class="task-priority priority-high">HIGH</span>
+                                <span>👥 Shared with Alex</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="task-item low">
+                        <div class="task-checkbox checked"></div>
+                        <div class="task-content">
+                            <div class="task-name completed">Review team feedback</div>
+                            <div class="task-meta">
+                                <span class="task-priority priority-low">LOW</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="task-item medium">
+                        <div class="task-checkbox"></div>
+                        <div class="task-content">
+                            <div class="task-name">Prepare presentation for client</div>
+                            <div class="task-meta">
+                                <span class="task-priority priority-medium">MEDIUM</span>
+                                <span>🤖 AI breakdown available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Add interactivity
+        document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', (e) => {
+                e.stopPropagation();
+                checkbox.classList.toggle('checked');
+                checkbox.closest('.task-item').querySelector('.task-name').classList.toggle('completed');
+            });
+        });
+        
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+        
+        document.querySelectorAll('.suggestion-tag').forEach(tag => {
+            tag.addEventListener('click', () => {
+                alert('New task created: ' + tag.textContent);
+            });
+        });
+    </script>
+</body>
+</html>
