@@ -10,23 +10,8 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
     <title>MentaList</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            screens: {
-              'xs': '375px',
-              'sm': '640px',
-              'md': '768px',
-              'lg': '1024px',
-              'xl': '1280px',
-            }
-          }
-        }
-      }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="./favicon.png">
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png">
     <style>
         * {
             -webkit-tap-highlight-color: transparent;
@@ -42,6 +27,9 @@
             background-color: #f8fafc;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+        .font-display {
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
         /* Mobile-first font sizing */
         html {
@@ -65,11 +53,45 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #cbd5e1;
         }
+        /* iOS gives date/time inputs an intrinsic minimum width, which makes them
+           overflow their container. Let them shrink like other inputs. */
+        input[type="date"], input[type="time"] {
+            -webkit-appearance: none;
+            appearance: none;
+            min-width: 0;
+            display: block;
+        }
+        input[type="date"]::-webkit-date-and-time-value,
+        input[type="time"]::-webkit-date-and-time-value {
+            text-align: left;
+            margin: 0;
+            padding: 0;
+            line-height: inherit;
+        }
+        /* Our time field has its own clock icon */
+        .hide-picker-icon::-webkit-calendar-picker-indicator { display: none; }
+        /* Long-press targets: no iOS text selection or callout menu */
+        .no-callout {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
         /* Safe area for notched phones */
         .safe-top { padding-top: env(safe-area-inset-top); }
         .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
         .safe-left { padding-left: env(safe-area-inset-left); }
         .safe-right { padding-right: env(safe-area-inset-right); }
+        @media (max-width: 767px) {
+            /* Full-screen fixed panels ignore the body's safe-area padding */
+            .safe-panel {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+            /* iOS zooms the page when focusing an input under 16px */
+            input, textarea, select {
+                font-size: 16px !important;
+            }
+        }
     </style>
 </head>
 <body class="safe-top safe-bottom">

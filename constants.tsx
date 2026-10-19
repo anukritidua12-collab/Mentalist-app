@@ -1,22 +1,22 @@
 
-import React from 'react';
+import {
+  Icon as PhosphorIcon, IconWeight, Plus, Check, CalendarBlank, Paperclip, UserPlus, CaretRight, CaretDown, Sparkle, Trash,
+  Eye, EyeSlash, Export, ChatCircle, ListChecks, Trophy, Bell, X, GearSix, SpeakerHigh, SpeakerSlash, Vibrate,
+  Palette, ClockCounterClockwise, ArrowCounterClockwise, Repeat, PencilSimple, Clock, Users, Rows, MusicNotes,
+  Confetti, MagnifyingGlass, PaperPlaneTilt, FlowArrow, CheckCircle, List, DotsThree, ChartLineUp,
+} from '@phosphor-icons/react';
 
 export const DEFAULT_CATEGORIES = [
-  { id: 'daily', name: 'Daily List', icon: '☀️', color: 'bg-blue-500', isDefault: true },
-  { id: 'work', name: 'Work List', icon: '💼', color: 'bg-indigo-500', isDefault: true },
-  { id: 'personal', name: 'Personal List', icon: '🏠', color: 'bg-emerald-500', isDefault: true },
-  { id: 'other', name: 'Other List', icon: '📋', color: 'bg-orange-500', isDefault: true },
-  { id: 'shared', name: 'Shared with Me', icon: '👥', color: 'bg-purple-500', isDefault: true },
+  { id: 'daily', name: 'Today', icon: 'sun', color: 'bg-blue-500', isDefault: true },
+  { id: 'work', name: 'Work', icon: 'briefcase', color: 'bg-indigo-500', isDefault: true },
+  { id: 'personal', name: 'Personal', icon: 'home', color: 'bg-emerald-500', isDefault: true },
+  { id: 'quick', name: 'Quick List', icon: 'checklist', color: 'bg-sky-500', isDefault: true },
+  { id: 'other', name: 'Other', icon: 'clipboard', color: 'bg-orange-500', isDefault: true },
+  { id: 'shared', name: 'Shared with Me', icon: 'users', color: 'bg-purple-500', isDefault: true },
 ];
 
 // Legacy export for backwards compatibility
 export const CATEGORIES = DEFAULT_CATEGORIES;
-
-export const MOCK_USERS = [
-  { id: 'u1', name: 'Alex River', avatar: 'https://picsum.photos/seed/alex/100/100', email: 'alex@example.com' },
-  { id: 'u2', name: 'Sarah Sun', avatar: 'https://picsum.photos/seed/sarah/100/100', email: 'sarah@example.com' },
-  { id: 'u3', name: 'Leo Night', avatar: 'https://picsum.photos/seed/leo/100/100', email: 'leo@example.com' },
-];
 
 export const MOTIVATIONAL_QUOTES = [
   // Stoic Philosophy (15)
@@ -76,72 +76,72 @@ export const MOTIVATIONAL_QUOTES = [
 
 export const QUICK_ADD_SUGGESTIONS = [
   // Daily Life (15)
-  "📧 Go through my emails",
-  "💪 Squeeze in a workout",
-  "📞 Give mom a call",
-  "🛒 Pick up some groceries",
-  "🧹 Tidy up the living room",
-  "💊 Take my vitamins",
-  "🚶 Go for a 20-min walk",
-  "💤 Get to bed by 10pm",
-  "🥗 Prep meals for the week",
-  "📱 Catch up with a friend",
-  "🪴 Water the plants",
-  "🧘 10 minutes of meditation",
-  "📖 Read for 30 minutes",
-  "💧 Drink 8 glasses of water",
-  "🛏️ Change the bed sheets",
+  "Go through my emails",
+  "Squeeze in a workout",
+  "Give mom a call",
+  "Pick up some groceries",
+  "Tidy up the living room",
+  "Take my vitamins",
+  "Go for a 20-min walk",
+  "Get to bed by 10pm",
+  "Prep meals for the week",
+  "Catch up with a friend",
+  "Water the plants",
+  "10 minutes of meditation",
+  "Read for 30 minutes",
+  "Drink 8 glasses of water",
+  "Change the bed sheets",
   // Work & Productivity (15)
-  "📊 Review the project status",
-  "✍️ Draft that proposal",
-  "🗓️ Schedule team sync",
-  "📝 Update meeting notes",
-  "💻 Clear out Slack messages",
-  "🎯 Set weekly goals",
-  "📁 Organize desktop files",
-  "🤝 Follow up on that lead",
-  "📈 Check analytics dashboard",
-  "💡 Brainstorm new ideas",
-  "🔍 Research competitors",
-  "📋 Review task backlog",
-  "⏰ Block focus time on calendar",
-  "🎤 Prepare presentation slides",
-  "💼 Update LinkedIn profile",
+  "Review the project status",
+  "Draft that proposal",
+  "Schedule team sync",
+  "Update meeting notes",
+  "Clear out Slack messages",
+  "Set weekly goals",
+  "Organize desktop files",
+  "Follow up on that lead",
+  "Check analytics dashboard",
+  "Brainstorm new ideas",
+  "Research competitors",
+  "Review task backlog",
+  "Block focus time on calendar",
+  "Prepare presentation slides",
+  "Update LinkedIn profile",
   // Self Care & Learning (10)
-  "🎵 Create a focus playlist",
-  "📚 Finish that online course",
-  "✨ Practice gratitude journaling",
-  "🧠 Learn something new today",
-  "🎨 Do something creative",
-  "☕ Take a proper coffee break",
-  "🌅 Watch the sunrise/sunset",
-  "📓 Write in journal",
-  "🏋️ Do a 15-min stretch routine",
-  "🧩 Solve a puzzle or brain teaser",
+  "Create a focus playlist",
+  "Finish that online course",
+  "Practice gratitude journaling",
+  "Learn something new today",
+  "Do something creative",
+  "Take a proper coffee break",
+  "Watch the sunrise/sunset",
+  "Write in journal",
+  "Do a 15-min stretch routine",
+  "Solve a puzzle or brain teaser",
   // Errands & Chores (10)
-  "🏦 Pay the bills",
-  "📬 Check the mailbox",
-  "🛠️ Fix that thing I've been avoiding",
-  "🧺 Do a load of laundry",
-  "🚗 Get the car washed",
-  "📦 Return that online order",
-  "🏪 Restock household supplies",
-  "🗑️ Take out the trash",
-  "🔧 Schedule maintenance appointment",
-  "📄 File important documents"
+  "Pay the bills",
+  "Check the mailbox",
+  "Fix that thing I've been avoiding",
+  "Do a load of laundry",
+  "Get the car washed",
+  "Return that online order",
+  "Restock household supplies",
+  "Take out the trash",
+  "Schedule maintenance appointment",
+  "File important documents"
 ];
 
 export const DAILY_QUOTES = [
-  "Seize the day ✨",
-  "Make today count 🌟",
-  "Today is your canvas 🎨",
-  "One day at a time 💪",
-  "Today's goals, tomorrow's achievements 🎯",
-  "Make it happen ⚡",
-  "Your day, your way 🌈",
-  "Rise and shine ☀️",
-  "Today is a fresh start 🌱",
-  "Embrace the day ahead 🚀"
+  "Seize the day",
+  "Make today count",
+  "Today is your canvas",
+  "One day at a time",
+  "Today's goals, tomorrow's achievements",
+  "Make it happen",
+  "Your day, your way",
+  "Rise and shine",
+  "Today is a fresh start",
+  "Embrace the day ahead"
 ];
 export const VICTORY_QUOTES = [
   "Well done is better than well said. And you've done it! — Benjamin Franklin",
@@ -153,198 +153,241 @@ export const VICTORY_QUOTES = [
   "Somewhere, a procrastinator just felt a disturbance in the force."
 ];
 
-export const THEMES = {
+export const THEMES: Record<string, any> = {
   clarity: {
+    confettiPath: 'M10 0 C11 7 13 9 20 10 C13 11 11 13 10 20 C9 13 7 11 0 10 C7 9 9 7 10 0 Z', // Confetti piece shape (SVG path); '' = plain dots
+    swatch: ['#F3F5F9', '#1F2433', '#3B5BDB'], // Ground, text, accent (shown in the theme picker)
     name: 'Clarity',
     primary: 'indigo-600',
     secondary: 'indigo-50',
-    bg: 'bg-gradient-to-br from-slate-100 via-indigo-50 to-slate-100',
+    bg: 'theme-ground',
+    paper: '#F3F5F9', // Page background, also used behind the iPhone status bar
     accent: 'blue-500',
-    icon: '✨',
-    description: 'Clean & professional',
-    confettiColors: ['#6366f1', '#a855f7', '#ec4899', '#fbbf24', '#10b981', '#3b82f6'],
+    description: 'Ink and pen blue',
+    confettiColors: ['#3B5BDB', '#6F86E8', '#1F2433', '#A9B8F2', '#FFD84D'],
     confettiShapes: ['circle', 'square'],
-    categoryIcons: { complete: '✓', priority: '!', reminder: '🔔' }
+    tagline: 'Clear mind, clear list',
+    emptyTitle: 'A clean slate',
+    emptyText: 'Nothing on your plate. Enjoy the clarity.',
+    darkBg: 'bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900',
+    revealGradient: 'radial-gradient(circle at 50% 40%, #FFFFFF 0%, #EBEFFC 55%, #C9D3F7 100%)',
   },
-  midnight: {
-    name: 'Midnight',
-    primary: 'slate-900',
-    secondary: 'slate-800',
-    bg: 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900',
-    accent: 'purple-500',
-    icon: '🌙',
-    description: 'Dark & elegant',
-    confettiColors: ['#818cf8', '#a78bfa', '#c084fc', '#e879f9', '#f472b6'],
-    confettiShapes: ['star', 'circle'],
-    categoryIcons: { complete: '⭐', priority: '💫', reminder: '🌟' }
+  focus: {
+    confettiPath: '', // Confetti piece shape (SVG path); '' = plain dots
+    swatch: ['#F4F4F2', '#1C1C1E', '#2F2F33'], // Ground, text, accent (shown in the theme picker)
+    name: 'Graphite',
+    primary: 'slate-600',
+    secondary: 'slate-100',
+    bg: 'theme-ground',
+    paper: '#F4F4F2', // Page background, also used behind the iPhone status bar
+    accent: 'indigo-500',
+    description: 'Graphite, nothing else',
+    confettiColors: ['#2F2F33', '#6B6B70', '#A3A3A0', '#D4D4D0', '#1C1C1E'],
+    confettiShapes: ['circle'],
+    tagline: 'One thing at a time',
+    emptyTitle: 'Nothing to focus on',
+    emptyText: 'Quiet. Exactly how it should be.',
+    darkBg: 'bg-gradient-to-br from-slate-950 via-slate-900 to-zinc-900',
+    revealGradient: 'radial-gradient(circle at 50% 40%, #FFFFFF 0%, #ECECE9 60%, #D4D4D0 100%)',
   },
-  love: {
-    name: 'Love',
-    primary: 'pink-500',
-    secondary: 'pink-50',
-    bg: 'bg-gradient-to-br from-pink-100 via-rose-50 to-pink-100',
-    accent: 'rose-500',
-    icon: '💕',
-    description: 'Romantic & sweet',
-    confettiColors: ['#ec4899', '#f472b6', '#fb7185', '#f43f5e', '#fda4af'],
-    confettiShapes: ['heart'],
-    confettiEmojis: ['❤️', '💕', '💖', '💗', '💘', '💝', '😍', '🥰', '💋', '🏹'],
-    categoryIcons: { complete: '💖', priority: '💗', reminder: '💕' }
+  warmth: {
+    confettiPath: 'M10 18 C-4 9 3 -1 10 5 C17 -1 24 9 10 18 Z', // Confetti piece shape (SVG path); '' = plain dots
+    swatch: ['#F7F1E8', '#2B2119', '#A8601C'], // Ground, text, accent (shown in the theme picker)
+    name: 'Warmth',
+    primary: 'amber-600',
+    secondary: 'amber-50',
+    bg: 'theme-ground',
+    paper: '#F7F1E8', // Page background, also used behind the iPhone status bar
+    accent: 'orange-600',
+    description: 'Honey and linen',
+    confettiColors: ['#A8601C', '#C98A45', '#E3B57A', '#7A4515', '#F3E7D6'],
+    confettiShapes: ['circle', 'square'],
+    tagline: 'Cozy, steady progress',
+    emptyTitle: 'Time for a cuppa',
+    emptyText: 'Your list is empty. Put the kettle on.',
+    darkBg: 'bg-gradient-to-br from-stone-950 via-amber-950 to-stone-900',
+    revealGradient: 'radial-gradient(circle at 50% 40%, #FFFDF9 0%, #F3E7D6 55%, #E3C7A0 100%)',
+  },
+  serenity: {
+    confettiPath: 'M10 0 C10 0 18 9 18 13.5 A8 8 0 0 1 2 13.5 C2 9 10 0 10 0 Z', // Confetti piece shape (SVG path); '' = plain dots
+    swatch: ['#EBF3F5', '#10303A', '#0B6E8A'], // Ground, text, accent (shown in the theme picker)
+    name: 'Serenity',
+    primary: 'cyan-600',
+    secondary: 'cyan-50',
+    bg: 'theme-ground',
+    paper: '#EBF3F5', // Page background, also used behind the iPhone status bar
+    accent: 'sky-500',
+    description: 'Deep tide and sea air',
+    confettiColors: ['#0B6E8A', '#3E97AE', '#7FC3D3', '#10303A', '#BFE1EA'],
+    confettiShapes: ['circle'],
+    tagline: 'Calm seas, clear sailing',
+    emptyTitle: 'Calm waters ahead',
+    emptyText: 'Nothing on the horizon. Breathe in the sea air.',
+    darkBg: 'bg-gradient-to-b from-slate-950 via-cyan-950 to-sky-950',
+    revealGradient: 'linear-gradient(180deg, #F4FAFB 0%, #D7ECF1 50%, #7FC3D3 85%, #0B6E8A 100%)',
   },
   nature: {
+    confettiPath: 'M10 0 C18 6 18 16 10 24 C2 16 2 6 10 0 Z', // Confetti piece shape (SVG path); '' = plain dots
+    swatch: ['#EFF3EA', '#1D2B1F', '#3D7A36'], // Ground, text, accent (shown in the theme picker)
     name: 'Nature',
     primary: 'emerald-600',
     secondary: 'emerald-50',
-    bg: 'bg-gradient-to-br from-green-100 via-emerald-50 to-teal-50',
+    bg: 'theme-ground',
+    paper: '#EFF3EA', // Page background, also used behind the iPhone status bar
     accent: 'teal-500',
-    icon: '🌿',
-    description: 'Fresh & natural',
-    confettiColors: ['#10b981', '#34d399', '#6ee7b7', '#a3e635', '#22c55e'],
+    description: 'Sage and moss',
+    confettiColors: ['#3D7A36', '#6A9E5F', '#A7C79A', '#1D2B1F', '#D9C27A'],
     confettiShapes: ['circle'],
-    confettiEmojis: ['🌿', '🍃', '🌱', '🌸', '🦋', '🌺', '🌻', '🍀'],
-    categoryIcons: { complete: '🌱', priority: '🌿', reminder: '🍃' }
+    tagline: 'Grow a little every day',
+    emptyTitle: 'Room to grow',
+    emptyText: 'Plant your first task and watch it bloom.',
+    darkBg: 'bg-gradient-to-b from-slate-950 via-emerald-950 to-green-950',
+    revealGradient: 'linear-gradient(180deg, #F7F9F3 0%, #E4EDDD 50%, #A7C79A 88%, #3D7A36 100%)',
   },
-  ocean: {
-    name: 'Ocean',
-    primary: 'cyan-600',
-    secondary: 'cyan-50',
-    bg: 'bg-gradient-to-br from-cyan-100 via-blue-50 to-sky-100',
-    accent: 'sky-500',
-    icon: '🌊',
-    description: 'Calm & peaceful',
-    confettiColors: ['#06b6d4', '#22d3ee', '#0ea5e9', '#38bdf8', '#7dd3fc'],
+  blossom: {
+    confettiPath: 'M10 0 C15 3 16 10 10 20 C4 10 5 3 10 0 Z', // Petal
+    swatch: ['#F9F1F3', '#33202A', '#B2476E'], // Ground, text, accent (shown in the theme picker)
+    name: 'Blossom',
+    primary: 'rose-700',
+    secondary: 'rose-50',
+    bg: 'theme-ground',
+    paper: '#F9F1F3', // Page background, also used behind the iPhone status bar
+    accent: 'rose-400',
+    description: 'Rose and petal',
+    confettiColors: ['#B2476E', '#CF7A9A', '#F1CFDB', '#33202A', '#E8B4C4'],
     confettiShapes: ['circle'],
-    confettiEmojis: ['🌊', '🐚', '🐬', '🐳', '🦀', '⚓', '🏖️', '🐠'],
-    categoryIcons: { complete: '🐚', priority: '🌊', reminder: '🐬' }
+    tagline: 'Gentle and in bloom',
+    emptyTitle: 'Nothing but petals',
+    emptyText: 'Your list is clear. Let the day unfold.',
+    darkBg: 'bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950',
+    revealGradient: 'radial-gradient(circle at 50% 40%, #FFFFFF 0%, #F6E6EC 55%, #E8B4C4 100%)',
   },
-  sunset: {
-    name: 'Sunset',
-    primary: 'orange-500',
-    secondary: 'orange-50',
-    bg: 'bg-gradient-to-br from-orange-100 via-amber-50 to-rose-100',
-    accent: 'amber-500',
-    icon: '🌅',
-    description: 'Warm & cozy',
-    confettiColors: ['#f97316', '#fb923c', '#fbbf24', '#f59e0b', '#ef4444'],
-    confettiShapes: ['circle', 'star'],
-    confettiEmojis: ['🌅', '☀️', '🌞', '🔥', '✨', '🌟'],
-    categoryIcons: { complete: '🌟', priority: '🔥', reminder: '☀️' }
-  },
-  galaxy: {
-    name: 'Galaxy',
-    primary: 'violet-600',
-    secondary: 'violet-50',
-    bg: 'bg-gradient-to-br from-violet-200 via-purple-100 to-indigo-200',
+  midnight: {
+    confettiPath: 'M10 0 L12.9 6.9 L20 7.6 L14.6 12.3 L16.2 19.5 L10 15.8 L3.8 19.5 L5.4 12.3 L0 7.6 L7.1 6.9 Z', // Confetti piece shape (SVG path); '' = plain dots
+    swatch: ['#0F1222', '#E6E8F5', '#8E9CFF'], // Ground, text, accent (shown in the theme picker)
+    name: 'Midnight',
+    primary: 'slate-900',
+    secondary: 'slate-800',
+    bg: 'theme-ground',
+    paper: '#0F1222', // Page background, also used behind the iPhone status bar
     accent: 'purple-500',
-    icon: '🌌',
-    description: 'Cosmic & mystical',
-    confettiColors: ['#8b5cf6', '#a855f7', '#d946ef', '#c084fc', '#e879f9'],
-    confettiShapes: ['star'],
-    confettiEmojis: ['🌌', '⭐', '🌟', '💫', '✨', '🚀', '🛸', '🌙'],
-    categoryIcons: { complete: '⭐', priority: '🚀', reminder: '🌙' }
+    description: 'Ink-blue night',
+    confettiColors: ['#8E9CFF', '#B3BCFF', '#E6E8F5', '#5B67C9', '#F5D88A'],
+    confettiShapes: ['star', 'circle'],
+    tagline: 'Quiet focus under the stars',
+    emptyTitle: 'A still, starry night',
+    emptyText: 'Nothing left to do. Rest easy.',
+    darkBg: 'theme-ground',
+    revealGradient: 'radial-gradient(circle at 50% 35%, #2E3463 0%, #171B2E 55%, #0F1222 100%)',
+    isDark: true, // Always uses dark styling, whatever the display mode
   },
-  candy: {
-    name: 'Candy',
-    primary: 'fuchsia-500',
-    secondary: 'fuchsia-50',
-    bg: 'bg-gradient-to-br from-pink-200 via-fuchsia-100 to-purple-200',
-    accent: 'pink-400',
-    icon: '🍬',
-    description: 'Fun & playful',
-    confettiColors: ['#e879f9', '#f0abfc', '#f472b6', '#fb7185', '#a78bfa'],
-    confettiShapes: ['circle', 'square'],
-    confettiEmojis: ['🍬', '🍭', '🍫', '🧁', '🎂', '🍩', '🍪', '🎀'],
-    categoryIcons: { complete: '🍬', priority: '🍭', reminder: '🧁' }
+  twilight: {
+    confettiPath: 'M10 0 C15 3 16 10 10 20 C4 10 5 3 10 0 Z', // Confetti piece shape (SVG path); '' = plain dots
+    swatch: ['#1A1422', '#F3E9F1', '#E79BBE'], // Ground, text, accent (shown in the theme picker)
+    name: 'Twilight',
+    primary: 'pink-400',
+    secondary: 'pink-900',
+    bg: 'theme-ground',
+    paper: '#1A1422', // Page background, also used behind the iPhone status bar
+    accent: 'rose-300',
+    description: 'Plum dusk and rose',
+    confettiColors: ['#E79BBE', '#F2BED6', '#B97AA0', '#F3E9F1', '#F0C48A'],
+    confettiShapes: ['heart', 'circle'],
+    tagline: 'Soft light, gentle progress',
+    emptyTitle: 'Petals and peace',
+    emptyText: 'All clear as the evening settles in.',
+    darkBg: 'theme-ground',
+    revealGradient: 'linear-gradient(180deg, #1A1422 0%, #3A2440 55%, #8A4F72 90%, #E79BBE 100%)',
+    isDark: true, // Always uses dark styling, whatever the display mode
   },
-  minimalist: {
-    name: 'Minimalist',
-    primary: 'gray-700',
-    secondary: 'gray-50',
-    bg: 'bg-gradient-to-br from-gray-50 via-white to-gray-100',
-    accent: 'gray-500',
-    icon: '◻️',
-    description: 'Simple & focused',
-    confettiColors: ['#374151', '#6b7280', '#9ca3af', '#d1d5db', '#f3f4f6'],
-    confettiShapes: ['square'],
-    categoryIcons: { complete: '✓', priority: '•', reminder: '○' }
-  }
+  ink: {
+    confettiPath: '', // Plain dots
+    swatch: ['#000000', '#F2F2F2', '#9A9A9A'], // Ground, text, accent (shown in the theme picker)
+    name: 'Ink',
+    primary: 'white',
+    secondary: 'neutral-900',
+    bg: 'theme-ground',
+    paper: '#000000', // Page background, also used behind the iPhone status bar
+    accent: 'white',
+    description: 'True black',
+    confettiColors: ['#F2F2F2', '#9A9A9A', '#5A5A5A', '#FFFFFF', '#D4D4D4'],
+    confettiShapes: ['circle'],
+    tagline: 'Nothing but the list',
+    emptyTitle: 'Blank page',
+    emptyText: 'Nothing here. Enjoy the quiet.',
+    darkBg: 'theme-ground',
+    revealGradient: 'radial-gradient(circle at 50% 40%, #1C1C1C 0%, #0A0A0A 60%, #000000 100%)',
+    isDark: true, // Always uses dark styling, whatever the display mode
+  },
+};
+
+// Dark mode always uses this neutral look (the chosen theme returns in light mode)
+export const NEUTRAL_DARK_THEME = {
+  name: 'Dark',
+  tagline: 'Clear mind, clear list',
+  emptyTitle: 'A clean slate',
+  emptyText: 'Nothing on your plate right now.',
+  bg: 'bg-slate-950',
+  darkBg: 'bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950',
+  confettiColors: ['#6366f1', '#818cf8', '#a5b4fc', '#38bdf8', '#e2e8f0'],
+  confettiPath: 'M10 0 C11 7 13 9 20 10 C13 11 11 13 10 20 C9 13 7 11 0 10 C7 9 9 7 10 0 Z',
+  revealGradient: 'linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%)',
+  isDark: true,
 };
 
 // Sound settings for notifications
 export const NOTIFICATION_SOUNDS = [
-  { id: 'chime', name: 'Chime', emoji: '🔔' },
-  { id: 'bell', name: 'Bell', emoji: '🛎️' },
-  { id: 'ding', name: 'Ding', emoji: '✨' },
-  { id: 'pop', name: 'Pop', emoji: '💫' },
-  { id: 'gentle', name: 'Gentle', emoji: '🌊' },
-  { id: 'alert', name: 'Alert', emoji: '⚡' },
+  { id: 'chime', name: 'Chime' },
+  { id: 'bell', name: 'Bell' },
+  { id: 'ding', name: 'Ding' },
+  { id: 'pop', name: 'Pop' },
+  { id: 'gentle', name: 'Gentle' },
+  { id: 'alert', name: 'Alert' },
 ];
 
+// App-wide icons: Phosphor (phosphoricons.com, MIT), regular weight. One family,
+// one stroke, so every screen reads as a set. Names and default sizes are unchanged.
+type IconProps = { size?: number; className?: string };
+const icon = (Glyph: PhosphorIcon, defaultSize: number, weight: IconWeight = 'regular') =>
+  ({ size = defaultSize, className }: IconProps = {}) => <Glyph size={size} weight={weight} className={className} aria-hidden="true" />;
+
 export const Icons = {
-  Plus: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-  ),
-  Check: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-  ),
-  Calendar: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-  ),
-  Attach: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
-  ),
-  UserPlus: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-  ),
-  ChevronRight: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-  ),
-  ChevronDown: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-  ),
-  Sparkles: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l1.912 3.873L18 7.492l-3 2.924L15.708 15 12 13.047 8.292 15 9 10.416l-3-2.924 4.088-.619L12 3z"></path></svg>
-  ),
-  Trash: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-  ),
-  Eye: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-  ),
-  EyeOff: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-  ),
-  Share: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
-  ),
-  MessageCircle: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-  ),
-  ListChecks: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 6H21"></path><path d="M10 12H21"></path><path d="M10 18H21"></path><polyline points="3 6 4 7 6 5"></polyline><polyline points="3 12 4 13 6 11"></polyline><polyline points="3 18 4 19 6 17"></polyline></svg>
-  ),
-  Trophy: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#EAB308" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
-  ),
-  Bell: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-  ),
-  X: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-  ),
-  Settings: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-  ),
-  Volume: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-  ),
-  VolumeOff: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-  ),
-  Vibrate: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M1 8v8M23 8v8"></path></svg>
-  ),
-  Palette: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r="0.5" fill="currentColor"></circle><circle cx="17.5" cy="10.5" r="0.5" fill="currentColor"></circle><circle cx="8.5" cy="7.5" r="0.5" fill="currentColor"></circle><circle cx="6.5" cy="12.5" r="0.5" fill="currentColor"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c0.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z"></path></svg>
-  ),
+  Plus: icon(Plus, 18, 'bold'),
+  Check: icon(Check, 16, 'bold'),
+  Calendar: icon(CalendarBlank, 16),
+  Attach: icon(Paperclip, 18),
+  UserPlus: icon(UserPlus, 16),
+  ChevronRight: icon(CaretRight, 16),
+  ChevronDown: icon(CaretDown, 16),
+  Sparkles: icon(Sparkle, 16),
+  Trash: icon(Trash, 16),
+  Eye: icon(Eye, 16),
+  EyeOff: icon(EyeSlash, 16),
+  Share: icon(Export, 16),
+  MessageCircle: icon(ChatCircle, 16),
+  ListChecks: icon(ListChecks, 16),
+  Trophy: icon(Trophy, 48, 'light'),
+  Bell: icon(Bell, 18),
+  X: icon(X, 16),
+  Settings: icon(GearSix, 18),
+  Volume: icon(SpeakerHigh, 16),
+  VolumeOff: icon(SpeakerSlash, 16),
+  Vibrate: icon(Vibrate, 16),
+  Palette: icon(Palette, 16),
+  History: icon(ClockCounterClockwise, 16),
+  RotateCcw: icon(ArrowCounterClockwise, 16),
+  Repeat: icon(Repeat, 16),
+  Edit: icon(PencilSimple, 16),
+  Clock: icon(Clock, 16),
+  Users: icon(Users, 16),
+  Lists: icon(Rows, 16),
+  Music: icon(MusicNotes, 16),
+  Party: icon(Confetti, 16),
+  Search: icon(MagnifyingGlass, 16),
+  Send: icon(PaperPlaneTilt, 16),
+  Workflow: icon(FlowArrow, 16),
+  CheckCircle: icon(CheckCircle, 16),
+  Menu: icon(List, 22),
+  More: icon(DotsThree, 22, 'bold'),
+  Chart: icon(ChartLineUp, 16),
 };

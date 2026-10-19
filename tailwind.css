@@ -1,0 +1,4 @@
+/* Compiled into the bundle so the app is fully styled offline (e.g. inside the iOS app) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

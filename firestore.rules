@@ -1,0 +1,78 @@
+rules_version = '2';
+
+// Security rules for MentaList collaboration. Paste into Firebase Console →
+// Firestore Database → Rules (see FIREBASE_SETUP.md).
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function myEmail() {
+      return request.auth.token.email.lower();
+    }
+
+    // Only verified emails can receive invites, so nobody can sign up with
+    // someone else's address and accept their invites.
+    function verified() {
+      return signedIn() && request.auth.token.email_verified == true;
+    }
+
+    // email -> { uid, name }. Lets an inviter see whether the person already has MentaList.
+    match /userEmails/{email} {
+      allow get: if signedIn();
+      allow create, update: if signedIn()
+        && email == myEmail()
+        && request.resource.data.uid == request.auth.uid;
+    }
+
+    match /sharedTasks/{taskId} {
+      function isMember() {
+        return request.auth.uid in resource.data.memberUids;
+      }
+      function isInvited() {
+        return verified() && myEmail() in resource.data.pendingEmails;
+      }
+
+      allow read: if signedIn() && (isMember() || isInvited());
+
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.memberUids == [request.auth.uid];
+
+      // Members can edit everything (collaborators can add, edit and delete).
+      // An invited person may only add themselves when accepting.
+      allow update: if signedIn() && (
+        isMember()
+        || (isInvited()
+          && request.resource.data.diff(resource.data).affectedKeys()
+               .hasOnly(['memberUids', 'memberInfo', 'pendingEmails', 'updatedAt'])
+          && request.resource.data.memberUids.hasAll(resource.data.memberUids)
+          && request.resource.data.memberUids.size() == resource.data.memberUids.size() + 1
+          && request.auth.uid in request.resource.data.memberUids)
+      );
+
+      allow delete: if signedIn() && isMember();
+    }
+
+    match /invites/{inviteId} {
+      allow read: if signedIn() && (
+        resource.data.fromUid == request.auth.uid
+        || (verified() && resource.data.toEmail == myEmail())
+      );
+
+      allow create: if signedIn()
+        && request.resource.data.fromUid == request.auth.uid
+        && request.resource.data.status == 'pending';
+
+      // Only the invited person can answer, and only by setting the reply fields.
+      allow update: if verified()
+        && resource.data.toEmail == myEmail()
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['status', 'respondedAt', 'respondedByName']);
+
+      allow delete: if signedIn() && resource.data.fromUid == request.auth.uid;
+    }
+  }
+}

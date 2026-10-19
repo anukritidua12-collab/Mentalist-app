@@ -1,67 +1,69 @@
 
 export interface SmartLink {
   app: string;
-  icon: string;
+  icon: string; // Key for SmartLinkIcon (components/AppIcons.tsx)
   url: string;
   color: string;
   label: string;
 }
 
+// A task name that mentions one of these apps gets a button to open it. Only clear
+// mentions count (an app's name, or a phrase like "send an email"), not everyday words.
 const APP_CONFIGS = [
   {
-    keywords: /\b(email|mail|gmail|outlook)\b/i,
-    app: 'Gmail',
-    icon: '📧',
+    keywords: /\b(e-?mails?|gmail|outlook)\b/i,
+    app: 'Mail',
+    icon: 'mail',
     url: 'mailto:',
     color: 'bg-red-500',
-    label: 'Compose Email'
+    label: 'Write an email'
   },
   {
-    keywords: /\b(instagram|ig|post)\b/i,
+    keywords: /\binstagram\b/i,
     app: 'Instagram',
-    icon: '📸',
+    icon: 'camera',
     url: 'https://www.instagram.com',
     color: 'bg-pink-600',
     label: 'Open Instagram'
   },
   {
-    keywords: /\b(linkedin|connect|profile)\b/i,
+    keywords: /\blinkedin\b/i,
     app: 'LinkedIn',
-    icon: '💼',
+    icon: 'briefcase',
     url: 'https://www.linkedin.com',
     color: 'bg-blue-700',
     label: 'Open LinkedIn'
   },
   {
-    keywords: /\b(whatsapp|wa|message|text)\b/i,
+    keywords: /\bwhats\s?app\b/i,
     app: 'WhatsApp',
-    icon: '💬',
+    icon: 'message',
     url: 'https://wa.me',
-    color: 'bg-green-500',
-    label: 'Send WhatsApp'
+    color: 'bg-green-600',
+    label: 'Open WhatsApp'
   },
   {
-    keywords: /\b(maps|location|directions|place|at)\b/i,
-    app: 'Google Maps',
-    icon: '📍',
-    url: 'https://www.google.com/maps',
+    keywords: /\b(maps|directions)\b/i,
+    app: 'Maps',
+    icon: 'map',
+    url: 'https://maps.apple.com',
     color: 'bg-emerald-600',
     label: 'Open Maps'
   },
   {
-    keywords: /\b(youtube|yt|video|watch)\b/i,
+    keywords: /\byoutube\b/i,
     app: 'YouTube',
-    icon: '🎬',
+    icon: 'video',
     url: 'https://www.youtube.com',
     color: 'bg-red-600',
-    label: 'Watch Video'
+    label: 'Open YouTube'
   },
   {
-    keywords: /\b(spotify|music|listen|song|playlist)\b/i,
+    keywords: /\b(spotify|playlist)\b/i,
     app: 'Spotify',
-    icon: '🎧',
+    icon: 'music',
     url: 'https://open.spotify.com',
-    color: 'bg-green-600',
+    color: 'bg-green-700',
     label: 'Open Spotify'
   }
 ];
