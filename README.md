@@ -29,6 +29,7 @@ Made by Anukriti Dua · mentalistishere@gmail.com
 | `public/privacy.html` | Privacy policy (in the app and on the web) |
 | `ios/App` | The Xcode project (Capacitor) |
 | `APP_STORE_REVIEW.md`, `APP_STORE_REVIEW_FINAL.md` | App Store and design guideline audits |
+| `APP_STORE_LISTING.md` | Name, subtitle, description, keywords and other App Store Connect fields |
 | `FIREBASE_SETUP.md` | How to switch on collaboration later |
 
 ## Working on it

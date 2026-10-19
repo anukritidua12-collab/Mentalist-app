@@ -164,7 +164,7 @@ export const THEMES: Record<string, any> = {
     paper: '#F3F5F9', // Page background, also used behind the iPhone status bar
     accent: 'blue-500',
     description: 'Ink and pen blue',
-    confettiColors: ['#3B5BDB', '#6F86E8', '#1F2433', '#A9B8F2', '#FFD84D'],
+    confettiColors: ['#3B5BDB', '#6F86E8', '#A9B8F2', '#FFD84D', '#FF8FAB'],
     confettiShapes: ['circle', 'square'],
     tagline: 'Clear mind, clear list',
     emptyTitle: 'A clean slate',
@@ -200,7 +200,7 @@ export const THEMES: Record<string, any> = {
     paper: '#F7F1E8', // Page background, also used behind the iPhone status bar
     accent: 'orange-600',
     description: 'Honey and linen',
-    confettiColors: ['#A8601C', '#C98A45', '#E3B57A', '#7A4515', '#F3E7D6'],
+    confettiColors: ['#A8601C', '#C98A45', '#E3B57A', '#F3E7D6', '#E8735A'],
     confettiShapes: ['circle', 'square'],
     tagline: 'Cozy, steady progress',
     emptyTitle: 'Time for a cuppa',
@@ -218,7 +218,7 @@ export const THEMES: Record<string, any> = {
     paper: '#EBF3F5', // Page background, also used behind the iPhone status bar
     accent: 'sky-500',
     description: 'Deep tide and sea air',
-    confettiColors: ['#0B6E8A', '#3E97AE', '#7FC3D3', '#10303A', '#BFE1EA'],
+    confettiColors: ['#0B6E8A', '#3E97AE', '#7FC3D3', '#BFE1EA', '#FFD84D'],
     confettiShapes: ['circle'],
     tagline: 'Calm seas, clear sailing',
     emptyTitle: 'Calm waters ahead',
@@ -236,7 +236,7 @@ export const THEMES: Record<string, any> = {
     paper: '#EFF3EA', // Page background, also used behind the iPhone status bar
     accent: 'teal-500',
     description: 'Sage and moss',
-    confettiColors: ['#3D7A36', '#6A9E5F', '#A7C79A', '#1D2B1F', '#D9C27A'],
+    confettiColors: ['#3D7A36', '#6A9E5F', '#A7C79A', '#D9C27A', '#F2A65A'],
     confettiShapes: ['circle'],
     tagline: 'Grow a little every day',
     emptyTitle: 'Room to grow',
@@ -254,7 +254,7 @@ export const THEMES: Record<string, any> = {
     paper: '#F9F1F3', // Page background, also used behind the iPhone status bar
     accent: 'rose-400',
     description: 'Rose and petal',
-    confettiColors: ['#B2476E', '#CF7A9A', '#F1CFDB', '#33202A', '#E8B4C4'],
+    confettiColors: ['#B2476E', '#CF7A9A', '#F1CFDB', '#E8B4C4', '#FFD1A6'],
     confettiShapes: ['circle'],
     tagline: 'Gentle and in bloom',
     emptyTitle: 'Nothing but petals',
@@ -334,16 +334,6 @@ export const NEUTRAL_DARK_THEME = {
   revealGradient: 'linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%)',
   isDark: true,
 };
-
-// Sound settings for notifications
-export const NOTIFICATION_SOUNDS = [
-  { id: 'chime', name: 'Chime' },
-  { id: 'bell', name: 'Bell' },
-  { id: 'ding', name: 'Ding' },
-  { id: 'pop', name: 'Pop' },
-  { id: 'gentle', name: 'Gentle' },
-  { id: 'alert', name: 'Alert' },
-];
 
 // App-wide icons: Phosphor (phosphoricons.com, MIT), regular weight. One family,
 // one stroke, so every screen reads as a set. Names and default sizes are unchanged.

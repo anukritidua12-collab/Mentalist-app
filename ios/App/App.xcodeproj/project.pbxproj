@@ -7,12 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2274262661AF4FE16A3A3888 /* reminder-alert.wav in Resources */ = {isa = PBXBuildFile; fileRef = CBEC17C42274262661AF4FE1 /* reminder-alert.wav */; };
-		56CF437696ADB83D4397B2CA /* reminder-bell.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0EBCD5EF56CF437696ADB83D /* reminder-bell.wav */; };
-		479FF3A974789185D5D5FBB5 /* reminder-chime.wav in Resources */ = {isa = PBXBuildFile; fileRef = BC0D74BA479FF3A974789185 /* reminder-chime.wav */; };
-		2ECF956810BC3290B8EAF375 /* reminder-ding.wav in Resources */ = {isa = PBXBuildFile; fileRef = D442BDF62ECF956810BC3290 /* reminder-ding.wav */; };
-		1B7380A240B6992E65AC49AF /* reminder-gentle.wav in Resources */ = {isa = PBXBuildFile; fileRef = E48E8A371B7380A240B6992E /* reminder-gentle.wav */; };
-		E99F06A05E6FE5732913F439 /* reminder-pop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 159DF61AE99F06A05E6FE573 /* reminder-pop.wav */; };
+		479FF3A974789185D5D5FBB5 /* reminder.wav in Resources */ = {isa = PBXBuildFile; fileRef = BC0D74BA479FF3A974789185 /* reminder.wav */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		4D22ABE92AF431CB00220026 /* CapApp-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 4D22ABE82AF431CB00220026 /* CapApp-SPM */; };
 		A1B2C3D4E5F60718293A4B5D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5C /* PrivacyInfo.xcprivacy */; };
@@ -26,12 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CBEC17C42274262661AF4FE1 /* reminder-alert.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = reminder-alert.wav; sourceTree = "<group>"; };
-		0EBCD5EF56CF437696ADB83D /* reminder-bell.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = reminder-bell.wav; sourceTree = "<group>"; };
-		BC0D74BA479FF3A974789185 /* reminder-chime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = reminder-chime.wav; sourceTree = "<group>"; };
-		D442BDF62ECF956810BC3290 /* reminder-ding.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = reminder-ding.wav; sourceTree = "<group>"; };
-		E48E8A371B7380A240B6992E /* reminder-gentle.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = reminder-gentle.wav; sourceTree = "<group>"; };
-		159DF61AE99F06A05E6FE573 /* reminder-pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = reminder-pop.wav; sourceTree = "<group>"; };
+		BC0D74BA479FF3A974789185 /* reminder.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = reminder.wav; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B5C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
@@ -81,12 +71,7 @@
 				9582B6822FE993A50072D4E8 /* SceneDelegate.swift */,
 				50379B222058CBB4000EE86E /* capacitor.config.json */,
 				A1B2C3D4E5F60718293A4B5C /* PrivacyInfo.xcprivacy */,
-				CBEC17C42274262661AF4FE1 /* reminder-alert.wav */,
-				0EBCD5EF56CF437696ADB83D /* reminder-bell.wav */,
-				BC0D74BA479FF3A974789185 /* reminder-chime.wav */,
-				D442BDF62ECF956810BC3290 /* reminder-ding.wav */,
-				E48E8A371B7380A240B6992E /* reminder-gentle.wav */,
-				159DF61AE99F06A05E6FE573 /* reminder-pop.wav */,
+				BC0D74BA479FF3A974789185 /* reminder.wav */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
@@ -168,12 +153,7 @@
 				504EC30F1FED79650016851F /* Assets.xcassets in Resources */,
 				50379B232058CBB4000EE86E /* capacitor.config.json in Resources */,
 				A1B2C3D4E5F60718293A4B5D /* PrivacyInfo.xcprivacy in Resources */,
-				2274262661AF4FE16A3A3888 /* reminder-alert.wav in Resources */,
-				56CF437696ADB83D4397B2CA /* reminder-bell.wav in Resources */,
-				479FF3A974789185D5D5FBB5 /* reminder-chime.wav in Resources */,
-				2ECF956810BC3290B8EAF375 /* reminder-ding.wav in Resources */,
-				1B7380A240B6992E65AC49AF /* reminder-gentle.wav in Resources */,
-				E99F06A05E6FE5732913F439 /* reminder-pop.wav in Resources */,
+				479FF3A974789185D5D5FBB5 /* reminder.wav in Resources */,
 				504EC30D1FED79650016851F /* Main.storyboard in Resources */,
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
 			);

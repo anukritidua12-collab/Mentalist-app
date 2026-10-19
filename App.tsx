@@ -3,9 +3,9 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import confetti from 'canvas-confetti';
 import { Task, ThemeType, Notification, SharedUser } from './types';
 import { Capacitor } from '@capacitor/core';
-import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 import { StatusBar, Style } from '@capacitor/status-bar';
-import { DEFAULT_CATEGORIES, NEUTRAL_DARK_THEME, Icons, MOTIVATIONAL_QUOTES, THEMES, VICTORY_QUOTES, NOTIFICATION_SOUNDS } from './constants';
+import { DEFAULT_CATEGORIES, NEUTRAL_DARK_THEME, Icons, MOTIVATIONAL_QUOTES, THEMES, VICTORY_QUOTES } from './constants';
 import { Button } from './components/Button';
 import { TaskItem } from './components/TaskItem';
 import { TaskDetails } from './components/TaskDetails';
@@ -26,15 +26,15 @@ import { App as CapApp } from '@capacitor/app';
 import { GuideContent, StoryContent, APP_VERSION } from './components/GuidePages';
 import { FEATURES } from './config';
 import { dialogs, DialogHost } from './components/Dialogs';
-import { ListIcon, ThemeIcon, SoundIcon, LIST_ICON_KEYS, normalizeListIcon } from './components/AppIcons';
+import { ListIcon, ThemeIcon, LIST_ICON_KEYS, normalizeListIcon } from './components/AppIcons';
 import {
   ArrowsClockwise as RefreshCw, ChartBar as BarChart3, ClipboardText as ClipboardList, User, Users as UsersIcon, Bell as BellIcon,
-  CalendarPlus, Confetti as PartyPopper, SpeakerLow as Volume1, SpeakerHigh as Volume2, Sun, Moon, Monitor, Trophy,
+  CalendarPlus, Confetti as PartyPopper, Sun, Moon, Monitor, Trophy,
   SortDescending as ArrowDownWideNarrow, Lifebuoy, CaretDown, CaretLeft, CaretRight, CaretUp, DotsSixVertical, List, LockSimple, MagnifyingGlass, X,
 } from '@phosphor-icons/react';
 import './themes.css';
 import { generateId, toLocalDateString, localDateOffset, isTouchDevice, countsTowardsToday } from './utils';
-import { reminderService, PermissionState } from './services/reminderService';
+import { reminderService, PermissionState, SoundSettings } from './services/reminderService';
 import { storage, migrateFromLocalStorage } from './services/storageService';
 import { initAttachmentStorage, migrateInlineAttachments, deleteAttachmentFile } from './services/attachmentService';
 import { shareText, taskShareText } from './services/shareService';
@@ -151,12 +151,7 @@ const App: React.FC = () => {
   const [progressViewType, setProgressViewType] = useState<'weekly' | 'monthly'>('weekly');
   const [celebratedCategories, setCelebratedCategories] = useState<Set<string>>(new Set()); // Track which categories have been celebrated
   const [hasLoaded, setHasLoaded] = useState(false); // Don't save or carry forward until saved data is loaded
-  const [soundSettings, setSoundSettings] = useState({
-    enabled: true,
-    soundId: 'chime',
-    vibration: true,
-    volume: 80
-  });
+  const [soundSettings, setSoundSettings] = useState<SoundSettings>({ enabled: true, vibration: true });
 
   // Load persistence
   useEffect(() => {
@@ -192,10 +187,12 @@ const App: React.FC = () => {
           }
           setCategories(migrated);
         }
-        const savedSoundSettings = await storage.getJSON<typeof soundSettings | null>('mentalist_sound_settings', null);
+        // Earlier versions also saved a sound choice and volume; only on/off is kept now
+        const savedSoundSettings = await storage.getJSON<Partial<SoundSettings> | null>('mentalist_sound_settings', null);
         if (savedSoundSettings) {
-          setSoundSettings(savedSoundSettings);
-          reminderService.updateSettings(savedSoundSettings);
+          const loaded: SoundSettings = { enabled: savedSoundSettings.enabled ?? true, vibration: savedSoundSettings.vibration ?? true };
+          setSoundSettings(loaded);
+          reminderService.updateSettings(loaded);
         }
         const savedCarryForward = await storage.getJSON<boolean | null>('mentalist_carry_forward', null);
         if (savedCarryForward !== null) setCarryForwardEnabled(savedCarryForward);
@@ -776,8 +773,14 @@ const App: React.FC = () => {
     // Trigger celebration if all tasks in category are completed and this is a new "all complete" state
     // Only celebrate if we haven't celebrated this category already
     if (isAllCompleted && currentCompleted > lastCompletedCount && categoryTasks.length > 0 && !celebratedCategories.has(activeCategory)) {
-      if (confettiOnComplete) triggerCelebration();
-      setShowCelebrationModal(true);
+      setVictoryIdx(Math.floor(Math.random() * VICTORY_QUOTES.length));
+      if (confettiOnComplete) {
+        triggerThemedConfetti();
+        // The message follows the first burst, so the confetti gets a moment on its own
+        window.setTimeout(() => setShowCelebrationModal(true), 700);
+      } else {
+        setShowCelebrationModal(true);
+      }
       // Mark this category as celebrated
       setCelebratedCategories(prev => new Set([...prev, activeCategory]));
     }
@@ -794,29 +797,34 @@ const App: React.FC = () => {
     setLastCompletedCount(currentCompleted);
   }, [categoryTasks, isAllCompleted, activeCategory, celebratedCategories]);
 
-  const triggerCelebration = () => {
-    // Use theme-specific confetti
-    triggerThemedConfetti();
-    setVictoryIdx(Math.floor(Math.random() * VICTORY_QUOTES.length));
-  };
   
-  // One short, light burst (about 2 seconds) in the theme's colours and confetti shape
+  // A short celebration in three beats, in the theme's colours and confetti shape:
+  // cannons from both bottom corners, a burst from the middle, then a light shower
+  // from the top that drifts down for a couple of seconds. About 3.5 seconds in all.
+  const confettiTimers = useRef<number[]>([]);
   const triggerThemedConfetti = () => {
+    confettiTimers.current.forEach(clearTimeout);
+    confettiTimers.current = [];
     const currentTheme = neutralDark ? NEUTRAL_DARK_THEME : THEMES[theme as keyof typeof THEMES];
     const colors: string[] = currentTheme?.confettiColors || ['#6366f1', '#a855f7', '#ec4899', '#fbbf24'];
     const path: string | undefined = currentTheme?.confettiPath;
-    const shapes: confetti.Shape[] = path ? [confetti.shapeFromPath({ path }), 'circle'] : ['circle'];
-    const base = { colors, shapes, ticks: 130, gravity: 1.15, scalar: 0.9, disableForReducedMotion: false };
+    const shapes: confetti.Shape[] = path ? [confetti.shapeFromPath({ path }), 'circle', 'square'] : ['circle', 'square'];
+    const base = { colors, shapes, ticks: 240, gravity: 0.95, scalar: 1.05, disableForReducedMotion: false };
+    const later = (ms: number, fire: () => void) => confettiTimers.current.push(window.setTimeout(fire, ms));
 
-    confetti({ ...base, particleCount: 45, spread: 75, startVelocity: 38, origin: { x: 0.5, y: 0.65 } });
-    setTimeout(() => {
-      confetti({ ...base, particleCount: 18, angle: 60, spread: 50, startVelocity: 42, origin: { x: 0.1, y: 0.7 } });
-      confetti({ ...base, particleCount: 18, angle: 120, spread: 50, startVelocity: 42, origin: { x: 0.9, y: 0.7 } });
-    }, 150);
-  };
-  
-  const triggerRandomConfetti = () => {
-    triggerThemedConfetti();
+    if (Capacitor.isNativePlatform()) Haptics.notification({ type: NotificationType.Success }).catch(() => {});
+    // 1. Cannons
+    confetti({ ...base, particleCount: 55, angle: 60, spread: 55, startVelocity: 58, origin: { x: 0, y: 0.85 } });
+    confetti({ ...base, particleCount: 55, angle: 120, spread: 55, startVelocity: 58, origin: { x: 1, y: 0.85 } });
+    // 2. Burst
+    later(260, () => confetti({ ...base, particleCount: 80, spread: 100, startVelocity: 42, origin: { x: 0.5, y: 0.6 } }));
+    // 3. Shower: a few pieces at a time from above, falling slowly
+    for (let k = 0; k < 9; k++) {
+      later(650 + k * 200, () => confetti({
+        ...base, particleCount: 9, angle: 270, spread: 70, startVelocity: 8, gravity: 0.6, ticks: 300, drift: (Math.random() - 0.5) * 0.8,
+        origin: { x: 0.1 + Math.random() * 0.8, y: -0.05 },
+      }));
+    }
   };
 
   const addTask = (title: string = '', taskScheduledDate?: string) => {
@@ -2950,14 +2958,14 @@ const App: React.FC = () => {
                       <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${isDarkMode ? 'bg-slate-700 text-slate-300' : 'bg-white text-slate-600 shadow-sm'}`}><Icons.Music /></span>
                       <div>
                         <p className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-ink'}`}>Sound</p>
-                        <p className={`text-xs ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>{soundSettings.enabled ? 'Plays with each reminder' : 'Silent reminders'}</p>
+                        <p className={`text-xs ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>{!soundSettings.enabled ? 'Silent reminders' : Capacitor.isNativePlatform() ? 'A soft chime with each reminder, at your ringer volume' : 'A soft chime with each reminder'}</p>
                       </div>
                     </div>
                     <button
                       onClick={() => {
                         const enabled = !soundSettings.enabled;
                         setSoundSettings(prev => ({ ...prev, enabled }));
-                        if (enabled) reminderService.playPreviewSound(soundSettings.soundId);
+                        if (enabled) reminderService.playPreviewSound();
                       }}
                       role="switch"
                       aria-checked={soundSettings.enabled}
@@ -2967,48 +2975,6 @@ const App: React.FC = () => {
                       <div className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-transform duration-200 ${soundSettings.enabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
                     </button>
                   </div>
-
-                  {soundSettings.enabled && (
-                    <div className="pt-1 pb-2">
-                      <div className="grid grid-cols-3 gap-2">
-                        {NOTIFICATION_SOUNDS.map(sound => (
-                          <button
-                            key={sound.id}
-                            onClick={() => {
-                              setSoundSettings(prev => ({ ...prev, soundId: sound.id }));
-                              reminderService.playPreviewSound(sound.id);
-                            }}
-                            className={`h-11 rounded-xl text-sm font-medium flex items-center justify-center gap-1.5 border transition-all ${
-                              soundSettings.soundId === sound.id
-                                ? 'text-on-accent border-transparent'
-                                : isDarkMode ? 'border-slate-600 text-slate-300' : 'border-slate-200 text-slate-600 bg-white'
-                            }`}
-                            style={soundSettings.soundId === sound.id ? { backgroundColor: 'var(--theme-primary)' } : undefined}
-                          >
-                            <SoundIcon sound={sound.id} />{sound.name}
-                          </button>
-                        ))}
-                      </div>
-                      {Capacitor.isNativePlatform() ? (
-                        <p className={`text-xs mt-2 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>Reminder volume follows your iPhone's ringer volume.</p>
-                      ) : (
-                        <div className="flex items-center gap-3 mt-3">
-                          <span className={isDarkMode ? 'text-slate-400' : 'text-slate-500'}><Volume1 size={18} /></span>
-                          <input
-                            type="range"
-                            min="0"
-                            max="100"
-                            value={soundSettings.volume}
-                            onChange={(e) => { const volume = parseInt(e.target.value); setSoundSettings(prev => ({ ...prev, volume })); }}
-                            onMouseUp={() => reminderService.playPreviewSound(soundSettings.soundId)}
-                            onTouchEnd={() => reminderService.playPreviewSound(soundSettings.soundId)}
-                            className={`flex-1 h-2 rounded-full appearance-none cursor-pointer accent-[color:var(--theme-primary)] ${isDarkMode ? 'bg-slate-600' : 'bg-slate-200'}`}
-                          />
-                          <span className={isDarkMode ? 'text-slate-400' : 'text-slate-500'}><Volume2 size={18} /></span>
-                        </div>
-                      )}
-                    </div>
-                  )}
 
                   {(Capacitor.isNativePlatform() || isTouchDevice()) && (<>
                   <div className={`border-t my-2 ${isDarkMode ? 'border-slate-700' : 'border-slate-200'}`} />
@@ -3403,7 +3369,7 @@ const App: React.FC = () => {
 
       {/* Floating Confetti Button - Hidden on mobile when sidebar or task details are open */}
       <button
-        onClick={triggerRandomConfetti}
+        onClick={triggerThemedConfetti}
         aria-label="Celebrate with confetti"
         className={`fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] right-6 w-12 h-12 md:w-14 md:h-14 ${isDarkMode ? 'bg-slate-800 hover:bg-slate-700 border-slate-600' : 'bg-slate-100 hover:bg-slate-200 border-slate-200'} border rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-xl md:text-2xl transition-all hover:scale-110 active:scale-95 z-40 group ${selectedTask ? 'hidden' : sidebarOpen ? 'hidden md:flex' : ''}`}
         title="Celebrate"

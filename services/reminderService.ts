@@ -7,24 +7,16 @@ import { dialogs } from '../components/Dialogs';
 import { SummarySettings, DEFAULT_SUMMARY_SETTINGS, morningMessage, eveningMessage } from './dailySummary';
 
 export interface SoundSettings {
-  enabled: boolean;
-  soundId: string;
+  enabled: boolean; // Play the reminder chime
   vibration: boolean;
-  volume: number;
 }
 
 export type PermissionState = 'granted' | 'denied' | 'prompt' | 'unsupported';
 
-// Sound frequencies for different notification tones. The iPhone uses matching
-// WAV files (ios/App/App/reminder-<id>.wav, in the app bundle) because iOS plays the sound itself.
-const SOUND_CONFIGS = {
-  chime: { freq1: 800, freq2: 1000, duration: 0.5 },
-  bell: { freq1: 600, freq2: 900, duration: 0.6 },
-  ding: { freq1: 1200, freq2: 1400, duration: 0.3 },
-  pop: { freq1: 400, freq2: 600, duration: 0.2 },
-  gentle: { freq1: 500, freq2: 700, duration: 0.8 },
-  alert: { freq1: 1000, freq2: 1200, duration: 0.4 },
-};
+// The reminder chime. In the browser it's played with Web Audio; on iPhone iOS plays
+// the matching file ios/App/App/reminder.wav (in the app bundle) with the notification.
+const CHIME = { freq1: 800, freq2: 1000, duration: 0.5, volume: 0.24 };
+const NATIVE_SOUND_FILE = 'reminder.wav';
 
 const isNative = Capacitor.isNativePlatform();
 
@@ -77,9 +69,7 @@ class ReminderService {
   private summary: SummarySettings = DEFAULT_SUMMARY_SETTINGS;
   private settings: SoundSettings = {
     enabled: true,
-    soundId: 'chime',
     vibration: true,
-    volume: 80
   };
 
   updateSettings(settings: SoundSettings) {
@@ -151,8 +141,8 @@ class ReminderService {
     return false;
   }
 
-  private createSound(soundId: string) {
-    const config = SOUND_CONFIGS[soundId as keyof typeof SOUND_CONFIGS] || SOUND_CONFIGS.chime;
+  private createSound() {
+    const config = CHIME;
 
     try {
       const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -167,8 +157,7 @@ class ReminderService {
       oscillator1.frequency.value = config.freq1;
       oscillator2.frequency.value = config.freq2;
 
-      const volume = (this.settings.volume / 100) * 0.3;
-      gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+      gainNode.gain.setValueAtTime(config.volume, audioContext.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + config.duration);
 
       oscillator1.start(audioContext.currentTime);
@@ -182,11 +171,11 @@ class ReminderService {
 
   playReminderSound() {
     if (!this.settings.enabled) return;
-    this.createSound(this.settings.soundId);
+    this.createSound();
   }
 
-  playPreviewSound(soundId: string) {
-    this.createSound(soundId);
+  playPreviewSound() {
+    this.createSound();
   }
 
   triggerVibration() {
@@ -199,7 +188,7 @@ class ReminderService {
   }
 
   private nativeSound(): string | undefined {
-    return this.settings.enabled ? `reminder-${this.settings.soundId}.wav` : undefined;
+    return this.settings.enabled ? NATIVE_SOUND_FILE : undefined;
   }
 
   async testNotification() {
@@ -221,7 +210,7 @@ class ReminderService {
     }
 
     if (this.settings.enabled) {
-      this.createSound(this.settings.soundId);
+      this.createSound();
     }
     this.triggerVibration();
 

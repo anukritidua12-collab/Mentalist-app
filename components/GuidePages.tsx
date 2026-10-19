@@ -192,7 +192,7 @@ export const GuideContent: React.FC<Props & { onOpenStory: () => void; onOpenPri
       </Section>
 
       <Section isDarkMode={isDarkMode} icon={<BellSimple size={18} weight="duotone" />} title="Reminders"
-        intro="Give a task a reminder time and MentaList lets you know, with the sound of your choice.">
+        intro="Give a task a reminder time and MentaList lets you know with a soft chime (or silently, if you turn Sound off in Settings).">
         <I term="On iPhone">Reminders arrive like any other app’s notifications, even when MentaList is closed, following your sound and Focus settings.</I>
         <I term="On a computer">Reminders appear while MentaList is open in your browser. Allow notifications when asked.</I>
         <I term="Morning summary">A note at the start of your day (9 am unless you choose another time) listing what’s on Today, most important first.</I>

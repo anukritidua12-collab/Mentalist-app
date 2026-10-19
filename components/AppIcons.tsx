@@ -4,8 +4,8 @@ import {
   Orange, Airplane, GameController, Sun, Briefcase, House, ClipboardText, Users, Backpack, Barbell, ShoppingCart,
   Envelope, Phone, FilmSlate, ForkKnife, PencilSimple, Books, Sparkle, Rocket, Laptop, Gift, Heart, GraduationCap,
   Car, PawPrint, Wallet, Stethoscope, Code, Wrench, Tag, Coffee, Waves, Leaf, MoonStars, FlowerLotus, Plant,
-  Bell, BellRinging, CircleDashed, Lightning, Drop, Camera, ChatCircle, MapPin, Play, FileText, FileXls, FileImage,
-  FileAudio, FileVideo, FileZip, File, PresentationChart, Notepad, Feather, Mountains, Circle, Flower, PenNib, SunHorizon,
+  CircleDashed, Camera, ChatCircle, MapPin, Play, FileText, FileXls, FileImage, FileAudio, FileVideo, FileZip, File,
+  PresentationChart, Notepad, Feather, Mountains, Flower, PenNib, SunHorizon,
 } from '@phosphor-icons/react';
 
 // Icons come from Phosphor (phosphoricons.com, MIT licence). Lists use the two-tone
@@ -63,16 +63,6 @@ const THEME_ICONS: Record<string, { emblem: PhosphorIcon; empty: PhosphorIcon }>
 export const ThemeIcon: React.FC<{ theme: string; variant?: 'emblem' | 'empty'; size?: number; className?: string; style?: React.CSSProperties }> = ({ theme, variant = 'emblem', size = 18, className, style }) => {
   const Glyph = (THEME_ICONS[theme] || THEME_ICONS.clarity)[variant];
   return <Glyph size={size} weight={variant === 'empty' ? 'thin' : 'duotone'} className={className} style={style} aria-hidden="true" />;
-};
-
-// ---------- Reminder sound icons ----------
-const SOUND_ICONS: Record<string, PhosphorIcon> = {
-  chime: Bell, bell: BellRinging, ding: Sparkle, pop: Circle, gentle: Drop, alert: Lightning,
-};
-
-export const SoundIcon: React.FC<{ sound: string; size?: number }> = ({ sound, size = 16 }) => {
-  const Glyph = SOUND_ICONS[sound] || Bell;
-  return <Glyph size={size} aria-hidden="true" />;
 };
 
 // ---------- Smart link (app shortcut) icons ----------
