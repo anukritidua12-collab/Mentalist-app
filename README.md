@@ -58,6 +58,7 @@ Pushing to `main` builds and publishes the web version to GitHub Pages (`.github
 
 - App: https://anukritidua12-collab.github.io/Mentalist-app/
 - Privacy policy (for App Store Connect): https://anukritidua12-collab.github.io/Mentalist-app/privacy.html
+- Support page (for App Store Connect): https://anukritidua12-collab.github.io/Mentalist-app/support.html
 
 ## Releasing to the App Store
 
